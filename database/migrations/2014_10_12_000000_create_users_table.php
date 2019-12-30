@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('Fname');
             $table->string('Lname');
-            $table->string('role',1);       // 'P' for participant & 'F' for facilitator
+            $table->enum('role',['F','P']);       // 'P' for participant & 'F' for facilitator
             $table->string('photo_link');
             $table->boolean('is_verified')->default(false);
             $table->string('password');

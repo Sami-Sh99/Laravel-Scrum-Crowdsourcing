@@ -17,7 +17,7 @@ class CreateScoresTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('participant_id');
             $table->unsignedBigInteger('workshop_id');
-            $table->tinyInteger('score');
+            $table->enum('score',[1, 2, 3, 4, 5]);
             $table->timestamps();
             $table->foreign('workshop_id')->references('id')->on('workshops');
             $table->foreign('participant_id')->references('user_id')->on('participants');

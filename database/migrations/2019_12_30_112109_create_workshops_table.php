@@ -18,6 +18,7 @@ class CreateWorkshopsTable extends Migration
             $table->unsignedBigInteger('facilitator_id');
             $table->string('key')->unique();
             $table->integer('required_participants');
+            $table->text('description');
             $table->boolean('is_closed')->default(false);   // set true if workshop can no longer accept participants
             $table->boolean('has_ended')->default(false);   // set true if workshop ended
             $table->timestamps();
