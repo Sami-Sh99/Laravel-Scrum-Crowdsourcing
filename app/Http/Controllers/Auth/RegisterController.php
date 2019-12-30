@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Participant;
+use App\Facilitator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -23,8 +25,8 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
-     *
+     * Where to redirect users after registration if they try 
+     * to go to /register while already being logged in
      * @var string
      */
     protected $redirectTo = '/home';
@@ -48,7 +50,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'Fname' => 'required|string|max:255',
+            'Lname' => 'required|string|max:255',
+            'role'=>'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -62,10 +66,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'Fname' => $data['Fname'],
+            'Lname' => $data['Lname'],
+            'role'  => $data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        if($data['role']=='P'){
+            Participant::create([
+                'user_id'=>$user->id,
+            ]);
+        }
+        else{
+            Facilitator::create([
+                'user_id'=>$user->id,
+            ]);
+        }
+        return $user;
     }
 }
