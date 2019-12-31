@@ -15,19 +15,13 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->integer('id');
             $table->boolean('auto_verify')->default(false);
             $table->boolean('email_verify')->default(false);
             $table->timestamps();
+            $table->primary('id');
+            $table->foreign('id')->references('id')->on('users');
         });
-        DB::table('admins')->insert(
-            array(
-                'username' => 'admin',
-                'password' => Hash::make('admin')
-            )
-        );
     }
 
     /**
