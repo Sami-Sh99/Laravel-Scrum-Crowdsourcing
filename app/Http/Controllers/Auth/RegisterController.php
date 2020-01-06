@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Participant;
 use App\Facilitator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -66,12 +67,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $is_verified=DB::table('admins')->where('id',1)->get()[0]->auto_verify;
+        
         $user = User::create([
             'Fname' => $data['Fname'],
             'Lname' => $data['Lname'],
             'role'  => $data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'is_verified'=>$is_verified,
         ]);
         if($data['role']=='P'){
             Participant::create([

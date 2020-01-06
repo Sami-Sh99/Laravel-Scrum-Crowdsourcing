@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,9 @@ class AdminController extends Controller
         $users = DB::table('users')->paginate(15);
         // $users->withPath('custom/url');
         // dd($users);
-        return view('auth.admin.home')->with('users',$users);
+        $admin =DB::table('admins')->where('id',auth()->user()->id)->get()[0];
+        // dd($admin);
+        return view('auth.admin.home')->with('users',$users)->with('admin',$admin);
     }
 
     public function showAdminLoginForm()
@@ -53,5 +56,12 @@ class AdminController extends Controller
             ->where('id', $id)
             ->update(['is_verified' => 1]);
         return redirect()->intended('/admin');
+    }
+
+    public function toggleAutoVerify(){
+        $task = Admin::findOrFail(1);
+        $task->auto_verify=!$task->auto_verify;
+        $task->save();
+        return 1;
     }
 }

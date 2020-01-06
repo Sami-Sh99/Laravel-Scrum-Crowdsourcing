@@ -16,6 +16,16 @@
 
                     Welcome Admin are logged in!
                     <br>
+                    <label class="switch">
+                        @if ($admin->auto_verify)
+                            <input id="AutoVerify" type="checkbox" checked>
+                        @else
+                            <input id="AutoVerify" type="checkbox">
+                        @endif
+                            Auto verify
+                        <span class="slider round"></span>
+                      </label>
+                    <br>
                     <div class="">
                         <table class="table table-striped">
                            <thead>
@@ -50,4 +60,16 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+      $("#AutoVerify").change(function(){
+        $.get("{{route('auto verify')}}", function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+      });
+      });
+
+    </script>
 @endsection

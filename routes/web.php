@@ -33,6 +33,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //Admin Login
 Route::get('admin', 'AdminController@index');
 Route::get('admin/verify', 'AdminController@verify')->name('verify');
+Route::get('admin/autoverify', 'AdminController@toggleAutoVerify')->name('auto verify');
 // Route::get('admin/login', 'AdminController@showAdminLoginForm')->name('adminLogin');
 // Route::post('admin/login', 'AdminController@adminLogin');
 
