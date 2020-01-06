@@ -23,6 +23,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home')->with('user',$this->UserDataFilter());
+    }
+    private function UserDataFilter(){
+        $x=auth()->user();
+        return [
+            "id" => $x->id,
+            "email" => $x->email,
+            "Fname" => $x->Fname,
+            "Lname" => $x->Lname,
+            "role" => $x->role,
+            "photo_link" => $x->photo_link,
+            "is_verified" => $x->is_verified,
+            "created_at" => $x->created_at->diffForHumans(),
+        ];
     }
 }
