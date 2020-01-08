@@ -8,5 +8,13 @@ class Participant extends Model
 {
     public $timestamps = false;
     public $incrementing = false;
-    protected $fillable = ['user_id'];
+    protected $fillable = ['id'];
+
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id');
+    }
+    
+
 }

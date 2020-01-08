@@ -20,7 +20,7 @@ class CreateScoresTable extends Migration
             $table->enum('score',[1, 2, 3, 4, 5]);
             $table->timestamps();
             $table->foreign('workshop_id')->references('id')->on('workshops');
-            $table->foreign('participant_id')->references('user_id')->on('participants');
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 

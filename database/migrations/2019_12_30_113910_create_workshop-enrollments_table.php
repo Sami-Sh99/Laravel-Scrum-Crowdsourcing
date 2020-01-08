@@ -18,7 +18,7 @@ class CreateWorkshopEnrollmentsTable extends Migration
             $table->integer('workshop_id')->unsigned();
             $table->timestamps();
             $table->primary(['participant_id','workshop_id']);
-            $table->foreign('participant_id')->references('user_id')->on('participants');
+            $table->foreign('participant_id')->references('id')->on('participants');
             $table->foreign('workshop_id')->references('id')->on('workshops');
         });
     }

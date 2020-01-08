@@ -79,12 +79,12 @@ class RegisterController extends Controller
         ]);
         if($data['role']=='P'){
             Participant::create([
-                'user_id'=>$user->id,
+                'id'=>$user->id,
             ]);
         }
         else{
             Facilitator::create([
-                'user_id'=>$user->id,
+                'id'=>$user->id,
             ]);
         }
         return $user;

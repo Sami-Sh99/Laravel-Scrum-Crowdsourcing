@@ -18,7 +18,7 @@ class CreateCardsTable extends Migration
             $table->integer('participant_id')->unsigned();
             $table->text('content');
             $table->timestamps();
-            $table->foreign('participant_id')->references('user_id')->on('participants');
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 

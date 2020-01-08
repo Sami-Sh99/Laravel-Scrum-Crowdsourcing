@@ -22,7 +22,7 @@ class CreateWorkshopsTable extends Migration
             $table->boolean('is_closed')->default(false);   // set true if workshop can no longer accept participants
             $table->boolean('has_ended')->default(false);   // set true if workshop ended
             $table->timestamps();
-            $table->foreign('facilitator_id')->references('user_id')->on('facilitators');
+            $table->foreign('facilitator_id')->references('id')->on('facilitators');
         });
     }
 

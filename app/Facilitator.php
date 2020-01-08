@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Facilitator extends Model
 {
     public $timestamps = false;
-    public $incrementing = false;
-    protected $fillable = ['user_id'];
+    public $incrementing = false;    
+    protected $fillable = ['id'];
+
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id');
+    }
+
 }
+
