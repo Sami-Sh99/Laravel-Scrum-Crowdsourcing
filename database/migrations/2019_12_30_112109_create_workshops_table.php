@@ -15,7 +15,7 @@ class CreateWorkshopsTable extends Migration
     {
         Schema::create('workshops', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('facilitator_id');
+            $table->integer('facilitator_id')->unsigned();
             $table->string('key')->unique();
             $table->integer('required_participants');
             $table->text('description');

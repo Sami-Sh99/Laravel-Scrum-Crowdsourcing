@@ -15,8 +15,8 @@ class CreateScoresTable extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('participant_id');
-            $table->unsignedBigInteger('workshop_id');
+            $table->integer('participant_id')->unsigned();
+            $table->integer('workshop_id')->unsigned();
             $table->enum('score',[1, 2, 3, 4, 5]);
             $table->timestamps();
             $table->foreign('workshop_id')->references('id')->on('workshops');

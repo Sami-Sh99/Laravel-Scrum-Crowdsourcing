@@ -15,7 +15,7 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->integer('id');
+            $table->integer('id')->unsigned();
             $table->boolean('auto_verify')->default(false);
             $table->boolean('email_verify')->default(false);
             $table->timestamps();

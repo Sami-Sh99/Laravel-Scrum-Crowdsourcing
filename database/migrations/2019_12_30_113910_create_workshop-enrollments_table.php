@@ -14,8 +14,8 @@ class CreateWorkshopEnrollmentsTable extends Migration
     public function up()
     {
         Schema::create('workshop_enrollments', function (Blueprint $table) {
-            $table->unsignedBigInteger('participant_id');
-            $table->unsignedBigInteger('workshop_id');
+            $table->integer('participant_id')->unsigned();
+            $table->integer('workshop_id')->unsigned();
             $table->timestamps();
             $table->primary(['participant_id','workshop_id']);
             $table->foreign('participant_id')->references('user_id')->on('participants');
