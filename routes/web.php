@@ -37,4 +37,6 @@ Route::get('admin/autoverify', 'AdminController@toggleAutoVerify')->name('auto v
 // Route::get('admin/login', 'AdminController@showAdminLoginForm')->name('adminLogin');
 // Route::post('admin/login', 'AdminController@adminLogin');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+Route::get('user/update', 'HomeController@showUpdate')->name('user update');
+Route::post('user/update', 'HomeController@update')->name('user update');
