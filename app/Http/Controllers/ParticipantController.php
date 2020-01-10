@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-class ParticipantController extends Controller
+class ParticipantController extends UserController
 {
        /**
      * Create a new controller instance.
