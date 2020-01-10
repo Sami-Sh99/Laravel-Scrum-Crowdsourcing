@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -37,6 +39,25 @@ Route::get('admin/autoverify', 'AdminController@toggleAutoVerify')->name('auto v
 // Route::get('admin/login', 'AdminController@showAdminLoginForm')->name('adminLogin');
 // Route::post('admin/login', 'AdminController@adminLogin');
 
-Route::get('home', 'HomeController@index')->name('home');
-Route::get('user/update', 'HomeController@showUpdate')->name('user update');
-Route::post('user/update', 'HomeController@update')->name('user update');
+Route::get('home', function(){
+    $user = Auth::user();
+    if($user){
+        if($user->role == 'P')
+        return redirect('participant/home');
+        else if($user->role === 'F')
+        return redirect('facilitator/home');
+        else if($user->role === 'A')
+        return redirect('admin');
+    }
+    else 
+   return redirect('/');
+});
+
+
+
+Route::get('participant/home', 'ParticipantController@index');
+Route::get('facilitator/home', 'FacilitatorController@index');
+
+
+Route::get('participant/update', 'ParticipantController@showUpdate')->name('user update');
+Route::post('participant/update', 'ParticipantController@update')->name('user update');

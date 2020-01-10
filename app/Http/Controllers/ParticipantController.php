@@ -4,18 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-class HomeController extends Controller
+class ParticipantController extends Controller
 {
-    /**
+       /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('notAdmin');
+        $this->middleware('isParticipant');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -23,12 +22,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->with('user',$this->UserDataFilter());
+        return view('participant.home')->with('user',$this->UserDataFilter());
     }
 
     public function showUpdate(){
         $user=User::findOrFail(auth()->user()->id);
-        return view('user.update')->with('user',$this->UserDataFilter($user));
+        return view('participant.update')->with('user',$this->UserDataFilter($user));
         
     }
     public function update(Request $request)
@@ -86,4 +85,7 @@ class HomeController extends Controller
             "created_at" => $x->created_at->diffForHumans(),
         ];
     }
+    
 }
+ 
+?>

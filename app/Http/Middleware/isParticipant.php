@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
-class notAdmin
+class isParticipant
 {
     /**
      * Handle an incoming request.
@@ -15,12 +16,10 @@ class notAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user() && auth()->user()->role !='A') {
+        if (auth()->user() && auth()->user()->role =='P') {
             return $next($request);
         }
-        if (auth()->user() && auth()->user()->role =='A') {
-            return redirect()->intended('admin');
-        }
-            return response()->json('protected route');
+            return response()->json('Not Allow');
+ 
     }
 }
