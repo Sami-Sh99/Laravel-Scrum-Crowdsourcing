@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class isFacilitator
+class IsFacilitator
 {
     /**
      * Handle an incoming request.
