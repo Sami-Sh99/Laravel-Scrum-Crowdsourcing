@@ -33,6 +33,7 @@
                               <th>ID</th>
                               <th>Name</th>
                               <th>Email</th>
+                              <th>Active</th>
                               <th></th> 
                            </tr>
                            </thead>
@@ -44,8 +45,13 @@
                                 <tr class="danger">
                               @endif
                                  <td>{{ $user->id }}</td>
-                                 <td>{{ $user->Fname }}</td>
+                                 <td>{{ $user->Fname . $user->Lname }}</td>
                                  <td>{{ $user->email }}</td>
+                                 @if (!$user->is_deactivated)
+                                    <td><a class="btn btn-success" href="{{route('activation', ['id'=>$user->id])}}">Activate</a></td>
+                                 @else
+                                    <td><a class="btn btn-danger" href="{{route('activation', ['id'=>$user->id])}}">Deactivate</a></td>
+                                  @endif
                                  @if (!$user->is_verified)
                                 <td><a class="btn btn-primary" href="{{route('verify', ['id'=>$user->id])}}">verify</a></td>
                                  @endif

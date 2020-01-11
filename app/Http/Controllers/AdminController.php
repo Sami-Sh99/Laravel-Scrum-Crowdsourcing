@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Admin;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,10 +24,9 @@ class AdminController extends UserController
     public function index()
     {
         $users = DB::table('users')->paginate(15);
-        // $users->withPath('custom/url');
-        // dd($users);
+
         $admin =DB::table('admins')->where('id',auth()->user()->id)->get()[0];
-        // dd($admin);
+
         return view('auth.admin.home')->with('users',$users)->with('admin',$admin);
     }
 
@@ -61,6 +61,13 @@ class AdminController extends UserController
     public function toggleAutoVerify(){
         $task = Admin::findOrFail(1);
         $task->auto_verify=!$task->auto_verify;
+        $task->save();
+        return 1;
+    }
+
+    public function toggleActive($id){
+        $task = User::findOrFail($id);
+        $task->is_deactivated=!$task->is_deactivated;
         $task->save();
         return 1;
     }
