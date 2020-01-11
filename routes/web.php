@@ -26,7 +26,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('register');;
 
-// Password Reset Routes... //TODO Handle Reset Password
+// Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
@@ -53,12 +53,14 @@ Route::get('home', function(){
    return redirect('/');
 });
 
+//Facilitator
+Route::get('facilitator/home', 'FacilitatorController@index');
+Route::get('facilitator/update', 'FacilitatorController@showUpdate')->name('user update');
+Route::post('facilitator/update', 'FacilitatorController@update')->name('user update');
 
+//Participant
 
 Route::get('participant/home', 'ParticipantController@index');
-Route::get('facilitator/home', 'FacilitatorController@index');
-
-
 Route::get('participant/update', 'ParticipantController@showUpdate')->name('user update');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
 Route::get('participant/test', function(){

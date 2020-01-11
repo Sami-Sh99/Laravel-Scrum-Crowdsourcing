@@ -7,7 +7,7 @@
             <div class="panel-heading">Update Profile</div>
 
             <div class="panel-body">
-                <form class="form-horizontal" method="POST" action="{{ url('participant/update') }}" enctype="multipart/form-data">
+                <form class="form-horizontal" method="POST" action="{{ url('facilitator/update') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('Fname') ? ' has-error' : '' }}">

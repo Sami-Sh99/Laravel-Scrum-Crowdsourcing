@@ -62,10 +62,6 @@ class ParticipantController extends UserController
             $path = $request->file('profile')->storeAs('public/img/profile', $fileNameToStore);
             $user->photo_link = $fileNameToStore;
         } 
-        // else
-        // {
-        //     $fileNameToStore = 'unknown.png';
-        // }
 
         $user->save();
           
