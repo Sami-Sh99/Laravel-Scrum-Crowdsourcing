@@ -21,3 +21,20 @@
     </div>
 </div>
 @endsection
+
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('b3e67c88a537f5730018', {
+  cluster: 'ap2',
+  forceTLS: true
+});
+
+var channel = pusher.subscribe('my-channel');
+channel.bind('new-card', function(data) {
+  alert('working...');
+});
+</script>

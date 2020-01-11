@@ -11,7 +11,7 @@
 |
 */
 
-
+use App\Events\NewCard;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,3 +61,8 @@ Route::get('facilitator/home', 'FacilitatorController@index');
 
 Route::get('participant/update', 'ParticipantController@showUpdate')->name('user update');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
+Route::get('participant/test', function(){
+
+    event(new NewCard('hello world'));
+    return 'even has been sent';
+});
