@@ -68,6 +68,13 @@ class ParticipantController extends UserController
           return redirect('/home')->with('success', 'Profile Updated Successfully');
     }
 
+    public function deactivate(){
+        auth()->user()->is_deactivated=true;
+        auth()->user()->save();
+        Auth::logout();
+        return redirect('/');
+    }
+
     private function UserDataFilter(){
         $x=auth()->user();
         return [

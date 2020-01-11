@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 class FacilitatorController extends UserController
 {
        /**
@@ -67,6 +68,13 @@ class FacilitatorController extends UserController
         $user->save();
           
           return redirect('/home')->with('success', 'Profile Updated Successfully');
+    }
+
+    public function deactivate(){
+        auth()->user()->is_deactivated=true;
+        auth()->user()->save();
+        Auth::logout();
+        return redirect('/');
     }
 
     private function UserDataFilter(){

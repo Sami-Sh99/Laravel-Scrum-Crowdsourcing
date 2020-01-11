@@ -95,6 +95,12 @@
                         </div>
                     </div>
                 </form>
+                <form method="POST" action="{{ url('facilitator/deactivate') }}">
+                    {{ csrf_field() }}
+                    <div class="form-group col-md-6 col-md-offset-4">
+                        <button type="submit" class="btn btn-danger">Deactivate Account</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

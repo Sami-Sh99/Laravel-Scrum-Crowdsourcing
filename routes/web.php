@@ -13,6 +13,8 @@
 
 use App\Events\NewCard;
 
+Route::pattern('id', '[0-9]+'); //executed if {id} is numeric
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,13 +34,14 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-//Admin Login
+//Admin
 Route::get('admin', 'AdminController@index');
 Route::get('admin/verify', 'AdminController@verify')->name('verify');
 Route::get('admin/autoverify', 'AdminController@toggleAutoVerify')->name('auto verify');
-// Route::get('admin/login', 'AdminController@showAdminLoginForm')->name('adminLogin');
-// Route::post('admin/login', 'AdminController@adminLogin');
+Route::get('admin/toggleActive/{id}', 'AdminController@toggleActive')->name('activation');;
 
+
+//Users Home page
 Route::get('home', function(){
     $user = Auth::user();
     if($user){
@@ -57,6 +60,7 @@ Route::get('home', function(){
 Route::get('facilitator/home', 'FacilitatorController@index');
 Route::get('facilitator/update', 'FacilitatorController@showUpdate')->name('user update');
 Route::post('facilitator/update', 'FacilitatorController@update')->name('user update');
+Route::post('facilitator/deactivate', 'FacilitatorController@deactivate')->name('user deactivate');
 
 //Participant
 

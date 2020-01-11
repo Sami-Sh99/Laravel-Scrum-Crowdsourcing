@@ -21,9 +21,11 @@ class CreateUsersTable extends Migration
             $table->enum('role',['F', 'P', 'A']);       // 'P' for participant & 'F' for facilitator
             $table->string('photo_link')->default('unknown.png');
             $table->boolean('is_verified')->default(false);
+            $table->boolean('is_deactivated')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->index(['Fname', 'Lname']);
         });
     }
 
