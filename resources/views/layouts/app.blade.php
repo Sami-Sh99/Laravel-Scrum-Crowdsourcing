@@ -58,7 +58,7 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{Route::currentRouteName()."view" }}">
+                                    <a href="view">
                                        Profile
                                     </a>
 

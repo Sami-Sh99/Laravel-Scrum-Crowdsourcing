@@ -55,7 +55,7 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="home">
                     <hr>
-                    <form method="POST" action="{{ url('participant/update') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('facilitator/update') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
 

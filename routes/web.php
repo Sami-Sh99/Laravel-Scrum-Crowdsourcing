@@ -56,18 +56,31 @@ Route::get('home', function(){
    return redirect('/');
 });
 
+//Users View page
+Route::get('view', function(){
+    $user = Auth::user();
+    if($user){
+        if($user->role == 'P')
+        return redirect('participant/view');
+        else if($user->role === 'F')
+        return redirect('facilitator/view');
+    }
+    else 
+   return redirect('/');
+});
+
+
 //Facilitator
 Route::get('facilitator/home', 'FacilitatorController@index');
-Route::get('facilitator/update', 'FacilitatorController@showUpdate')->name('user update');
+Route::get('facilitator/view', 'FacilitatorController@showUpdate')->name('user update');
 Route::post('facilitator/update', 'FacilitatorController@update')->name('user update');
 Route::post('facilitator/deactivate', 'FacilitatorController@deactivate')->name('user deactivate');
 
 //Participant
 
 Route::get('participant/home', 'ParticipantController@index');
-Route::get('participant/update', 'ParticipantController@showUpdate')->name('user update');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
-Route::view('participant/view', 'participant.view');
+Route::get('participant/view', 'ParticipantController@showUpdate');
 // TEST ROUTE 
 Route::get('participant/test', function(){
     event(new NewCard('hello world'));

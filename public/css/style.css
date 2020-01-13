@@ -134,6 +134,11 @@ input {
   color: #ced4da;
 }
 
+.text-white {
+  color: #ced4da;
+}
+
+
 .text-gray:hover {
   color: #ced4da;
 }
@@ -212,6 +217,19 @@ font-size: 3rem;
 }
 
 
+.mb-50 {
+  margin-bottom:50px;
+}
+
+.mt-25 {
+  margin-top:25px;
+}
+.mt-20 {
+  margin-top:20px;
+}
+
+
+
 /*
 * ==========================================================
 *     BUTTONS
@@ -251,6 +269,13 @@ font-size: 3rem;
 }
 .form-control, .btn {        
     border-radius: 3px;
+}
+
+@media (max-width: 576px) {
+  .control-label {
+
+    font-size:0.9em;
+}
 }
 
 

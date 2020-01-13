@@ -28,9 +28,8 @@ class UpdateUser extends FormRequest
             'profile' => 'nullable|max:1999',
             'Fname'=>'nullable|max:190',
             'Lname'=>'nullable|max:190',
-            'old-password'=>'nullable|required_with:old-password,confirm-password',
-            'password'     => 'nullable|min:6|max:190|required_with:old-password,confirm-password',
-            'confirm-password' => 'nullable|same:password|required_with:old-password,password',
+            'old-password'=>'nullable',
+            'password'     => 'nullable|min:6|max:190|required_with:old-password|confirmed',
         ];
     }
 
@@ -46,12 +45,12 @@ class UpdateUser extends FormRequest
         // checks user current password
         // before making changes
         $validator->after(function ($validator) {
-            if ( !Hash::check($this->{'old-password'}, $this->user()->password) ) {
+
+            if ($this->{'old-password'} && !Hash::check($this->{'old-password'}, $this->user()->password) ) {
                 $validator->errors()->add('old-password', 'Your password is incorrect.');
             }
         });
         return;
     }
-
 
 }

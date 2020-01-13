@@ -32,7 +32,7 @@ class FacilitatorController extends UserController
     }
     public function showUpdate(){
         $user=User::findOrFail(auth()->user()->id);
-        return view('facilitator.update')->with('user',$user->userDataFilter());
+        return view('facilitator.view')->with('user',$user->userDataFilter());
     }
 
     public function update(UpdateUser $request)
@@ -42,10 +42,10 @@ class FacilitatorController extends UserController
         $user = auth()->user();
         
         if($result['Fname']) $user->Fname = $result['Fname'];
-        if($result['Lname']) $user->Fname = $result['Lname'];
+        if($result['Lname']) $user->Lname = $result['Lname'];
         if($result['password']) $user->password=Hash::make(trim($result['password']));
 
-        
+
         if($request->hasFile('profile')){   // Handle File Upload
             // Get filename with the extension
             $filenameWithExt = $request->file('profile')->getClientOriginalName();

@@ -31,7 +31,7 @@ class ParticipantController extends UserController
 
     public function showUpdate(){
         $user=User::findOrFail(auth()->user()->id);
-        return view('participant.update')->with('user',$user->UserDataFilter());
+        return view('participant.view')->with('user',$user->UserDataFilter());
         
     }
     public function update(UpdateUser $request)
