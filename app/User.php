@@ -31,4 +31,20 @@ class User extends Authenticatable
     {
         return $this->role == $role ? true : false;
     }
+
+
+    public function UserDataFilter(){
+        $x=$this;
+        return [
+            "id" => $x->id,
+            "email" => $x->email,
+            "Fname" => $x->Fname,
+            "Lname" => $x->Lname,
+            "role" => $x->role,
+            "photo_link" => $x->photo_link,
+            "is_verified" => $x->is_verified,
+            "created_at" => $x->created_at->diffForHumans(),
+        ];
+    }
+    
 }

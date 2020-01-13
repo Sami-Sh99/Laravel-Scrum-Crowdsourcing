@@ -38,14 +38,14 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('old password') ? ' has-error' : '' }}">
-                        <label for="old password" class="col-md-4 control-label">Old Password</label>
+                        <label for="old-password" class="col-md-4 control-label">Old Password</label>
 
                         <div class="col-md-6">
-                            <input id="old password" type="password" class="form-control" name="old password" >
+                            <input id="old-password" type="password" class="form-control" name="old-password" >
 
-                            @if ($errors->has('old password'))
+                            @if ($errors->has('old-password'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('old password') }}</strong>
+                                    <strong>{{ $errors->first('old-password') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -65,10 +65,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password-confirm" class="col-md-4 control-label">Confirm New Password</label>
+                        <label for="confirm-password" class="col-md-4 control-label">Confirm New Password</label>
 
                         <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
+                            <input id="confirm-password" type="password" class="form-control" name="confirm-password" >
                         </div>
                     </div>
 

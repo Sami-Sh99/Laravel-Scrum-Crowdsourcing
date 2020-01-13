@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUser;
+use Illuminate\Support\Facades\Hash;
 use App\User;
+
 class ParticipantController extends UserController
 {
        /**
@@ -22,33 +25,25 @@ class ParticipantController extends UserController
      */
     public function index()
     {
-        return view('participant.home')->with('user',$this->UserDataFilter());
+        $user=User::findOrFail(auth()->user()->id);
+        return view('participant.home')->with('user',$user->UserDataFilter());
     }
 
     public function showUpdate(){
         $user=User::findOrFail(auth()->user()->id);
-        return view('participant.update')->with('user',$this->UserDataFilter($user));
+        return view('participant.update')->with('user',$user->UserDataFilter());
         
     }
-    public function update(Request $request)
+    public function update(UpdateUser $request)
     {
-        $this->validate($request, [
-            'profile' => 'nullable|max:1999',
-            'Fname'=>'nullable|max:190',
-            'Lname'=>'nullable|max:190',
-            'new password'=>'nullable|confirmed|min:8|max:190',
-          ]);
-
+     
+        $result = $request->validated();
         $user = auth()->user();
+        
+        if($result['Fname']) $user->Fname = $result['Fname'];
+        if($result['Lname']) $user->Lname = $result['Lname'];
+        if($result['password']) $user->password=Hash::make(trim($result['password']));
 
-        if($request->has('Fname'))
-            $user->Fname=$request->input('Fname');
-        if($request->has('Lname'))
-            $user->Lname=$request->input('Lname');
-        if($request->has('password') && strlen($request->input('password'))>0)
-            if(bcrypt($request->input('old password'))!=$user->password)
-                return 'Password does not match';
-            $user->password=bcrypt($request->input('new password'));
         if($request->hasFile('profile')){   // Handle File Upload
             // Get filename with the extension
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
@@ -64,29 +59,7 @@ class ParticipantController extends UserController
         } 
 
         $user->save();
-          
           return redirect('/home')->with('success', 'Profile Updated Successfully');
-    }
-
-    public function deactivate(){
-        auth()->user()->is_deactivated=true;
-        auth()->user()->save();
-        Auth::logout();
-        return redirect('/');
-    }
-
-    private function UserDataFilter(){
-        $x=auth()->user();
-        return [
-            "id" => $x->id,
-            "email" => $x->email,
-            "Fname" => $x->Fname,
-            "Lname" => $x->Lname,
-            "role" => $x->role,
-            "photo_link" => $x->photo_link,
-            "is_verified" => $x->is_verified,
-            "created_at" => $x->created_at->diffForHumans(),
-        ];
     }
     
 }

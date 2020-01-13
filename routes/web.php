@@ -68,8 +68,8 @@ Route::get('participant/home', 'ParticipantController@index');
 Route::get('participant/update', 'ParticipantController@showUpdate')->name('user update');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
 Route::view('participant/view', 'participant.view');
+// TEST ROUTE 
 Route::get('participant/test', function(){
-
     event(new NewCard('hello world'));
     return 'even has been sent';
 });

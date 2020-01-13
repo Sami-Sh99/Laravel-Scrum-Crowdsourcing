@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -74,7 +75,7 @@ class RegisterController extends Controller
             'Lname' => $data['Lname'],
             'role'  => $data['role'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make(trim($data['password'])),
             'is_verified'=>$is_verified,
         ]);
         if($data['role']=='P'){
