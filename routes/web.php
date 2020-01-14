@@ -75,12 +75,15 @@ Route::get('facilitator/home', 'FacilitatorController@index');
 Route::get('facilitator/view', 'FacilitatorController@showUpdate')->name('user update');
 Route::post('facilitator/update', 'FacilitatorController@update')->name('user update');
 Route::post('facilitator/deactivate', 'FacilitatorController@deactivate')->name('user deactivate');
+Route::get('facilitator/workshop/create', 'FacilitatorController@showCreateWorkshop');
+Route::post('facilitator/workshop/create', 'FacilitatorController@createWorkshop');
 
 //Participant
-
 Route::get('participant/home', 'ParticipantController@index');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
 Route::get('participant/view', 'ParticipantController@showUpdate');
+Route::get('participant/workshop/join/{key}', 'ParticipantController@joinWorkshop');
+
 // TEST ROUTE 
 Route::get('participant/test', function(){
     event(new NewCard('hello world'));

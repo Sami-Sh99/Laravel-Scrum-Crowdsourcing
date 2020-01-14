@@ -35,11 +35,11 @@ class NewCard implements ShouldBroadcast
     public function broadcastOn()
     {
         return ['my-channel'];
-        }
+    }
 
-        public function broadcastAs()
-        {
-            return 'new-card';
-        }
+    public function broadcastAs()
+    {
+        return 'new-card';
+    }
 
 }

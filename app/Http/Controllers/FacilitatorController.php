@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUser;
+use App\Http\Requests\CreateWorkshop;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\User;
+use App\Workshop;
 use Auth;
 
 class FacilitatorController extends UserController
@@ -45,9 +47,10 @@ class FacilitatorController extends UserController
         if($result['Lname']) $user->Lname = $result['Lname'];
         if($result['password']) $user->password=Hash::make(trim($result['password']));
 
-
-        if($request->hasFile('profile')){   // Handle File Upload
+        dd($result);
+        if($result['profile']){   // Handle File Upload
             // Get filename with the extension
+            dd($request->file('profile'));
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -63,6 +66,38 @@ class FacilitatorController extends UserController
         return redirect('/home')->with('success', 'Profile Updated Successfully');
     }
 
+    public function showCreateWorkshop()
+    {
+        return view('workshop.create');
+    }
+
+    public function createWorkshop(CreateWorkshop $request)
+    {    
+        $result = $request->validated();
+        $workshop=Workshop::Create([
+            'key'=>$this->generateKey(),
+            'title'=>$result['title'],
+            'description'=>$result['description'],
+            'required_participants'=>$result['required_participants'],
+            'facilitator_id'=>auth()->user()->id,
+        ]);
+        $workshop->save();
+        $response=array(
+            'success'=>'Workshop Created',
+            'key'=>$workshop->key,
+        );
+        return redirect('/facilitator/home')->with('key',$workshop->key)->with('success', 'Workshop Created');
+    }
+
+    private function generateKey() {
+        $key = Str::random(7);
+    
+        // recursive call if the key exists already
+        if (Workshop::where('key',$key)->exists()) {
+            return generateKey();
+        }
+        return $key;
+    }
 }
  
 ?>

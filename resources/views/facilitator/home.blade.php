@@ -15,6 +15,12 @@
                     @endif
 
                     You are logged in!
+
+                    @if (session('key'))
+                        <div class="alert alert-success">
+                            {{ session('key') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

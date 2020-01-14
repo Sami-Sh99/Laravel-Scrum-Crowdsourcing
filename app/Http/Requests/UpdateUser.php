@@ -29,7 +29,7 @@ class UpdateUser extends FormRequest
             'Fname'=>'nullable|max:190',
             'Lname'=>'nullable|max:190',
             'old-password'=>'nullable',
-            'password'     => 'nullable|min:6|max:190|required_with:old-password|confirmed',
+            'password'=>'nullable|min:6|max:190|required_with:old-password|confirmed',
         ];
     }
 
