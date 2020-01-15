@@ -46,5 +46,11 @@ class User extends Authenticatable
             "created_at" => $x->created_at->diffForHumans(),
         ];
     }
-    
+
+
+    public function saveUser(){
+        $this->save();
+    }
+
+
 }

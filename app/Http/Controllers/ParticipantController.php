@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUser;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Participant;
+use Auth;
 
 class ParticipantController extends UserController
 {
@@ -25,12 +27,14 @@ class ParticipantController extends UserController
      */
     public function index()
     {
-        $user=User::findOrFail(auth()->user()->id);
+        $id = $this->getAuthedUser()->id;
+        $user= Participant::findById($id)->user; 
         return view('participant.home')->with('user',$user->UserDataFilter());
     }
 
     public function showUpdate(){
-        $user=User::findOrFail(auth()->user()->id);
+        $id =  $this->getAuthedUser()->id;
+        $user=Participant::findById($id)->user;
         return view('participant.view')->with('user',$user->UserDataFilter());
         
     }
@@ -38,7 +42,7 @@ class ParticipantController extends UserController
     {
      
         $result = $request->validated();
-        $user = auth()->user();
+        $user = $this->getAuthedUser();
         
         if($result['Fname']) $user->Fname = $result['Fname'];
         if($result['Lname']) $user->Lname = $result['Lname'];
@@ -58,8 +62,13 @@ class ParticipantController extends UserController
             $user->photo_link = $fileNameToStore;
         } 
 
-        $user->save();
+        $user->saveUser();
           return redirect('/home')->with('success', 'Profile Updated Successfully');
+    }
+
+    
+    public function getAuthedUser(){
+        return Auth::user();
     }
     
 }
