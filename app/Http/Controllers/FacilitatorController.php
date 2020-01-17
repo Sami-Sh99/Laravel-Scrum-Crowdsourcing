@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
 use App\Workshop;
+use App\WorkshopEnrollment;
 use Auth;
 
 class FacilitatorController extends UserController
