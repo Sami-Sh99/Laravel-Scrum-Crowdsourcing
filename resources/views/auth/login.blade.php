@@ -7,24 +7,21 @@
         <h2>Login</h2>
         <hr>
 
-        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="email">Email Address</label>
             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-            @if ($errors->has('email'))
-            <span class="help-block">
-                <strong>{{ $errors->first('email') }}</strong>
-            </span>
-            @endif
         </div>
 
 
-        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+        <div class="form-group">
             <label for="password">Password</label>
             <input id="password" type="password" class="form-control" name="password" required>
+        </div>
 
-            @if ($errors->has('password'))
+        <div class="form-group{{ $errors->any() ? ' has-error' : '' }}">
+            @if ($errors->any())
             <span class="help-block">
-                <strong>{{ $errors->first('password') }}</strong>
+                <strong>{{ $errors->first() }}</strong>
             </span>
             @endif
         </div>

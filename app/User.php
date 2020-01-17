@@ -48,6 +48,11 @@ class User extends Authenticatable
     }
 
 
+
+    public static function findByEmail($email){
+        return self::where('email', $email)->first();
+    }
+
     public function saveUser(){
         $this->save();
     }
