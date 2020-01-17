@@ -8,10 +8,12 @@ use Illuminate\Support\Str;
 use App\User;
 use App\Workshop;
 use App\WorkshopEnrollment;
+use App\Facilitator;
 use Auth;
 
 class FacilitatorController extends UserController
 {
+
        /**
      * Create a new controller instance.
      *
@@ -19,7 +21,6 @@ class FacilitatorController extends UserController
      */
     public function __construct()
     {
-    
         $this->middleware('isFacilitator');
     }
 
@@ -30,11 +31,14 @@ class FacilitatorController extends UserController
      */
     public function index()
     {
-        $user=User::findOrFail(auth()->user()->id);
+
+        $id = $this->getAuthedUser()->id;
+        $user= Facilitator::findById($id)->user;
         return view('facilitator.home')->with('user',$user->UserDataFilter());
     }
     public function showUpdate(){
-        $user=User::findOrFail(auth()->user()->id);
+        $id =  $this->getAuthedUser()->id;
+        $user=Facilitator::findById($id)->user;
         return view('facilitator.view')->with('user',$user->userDataFilter());
     }
 
@@ -42,13 +46,11 @@ class FacilitatorController extends UserController
     {
 
         $result = $request->validated();
-        $user = auth()->user();
-        
+        $user = $this->getAuthedUser();
         if($result['Fname']) $user->Fname = $result['Fname'];
         if($result['Lname']) $user->Lname = $result['Lname'];
         if($result['password']) $user->password=Hash::make(trim($result['password']));
 
-        dd($result);
         if($result['profile']){   // Handle File Upload
             // Get filename with the extension
             dd($request->file('profile'));
@@ -63,7 +65,7 @@ class FacilitatorController extends UserController
             $path = $request->file('profile')->storeAs('public/img/profile', $fileNameToStore);
             $user->photo_link = $fileNameToStore;
         } 
-        $user->save();
+        $user->saveUser();
         return redirect('/home')->with('success', 'Profile Updated Successfully');
     }
 
@@ -99,6 +101,11 @@ class FacilitatorController extends UserController
         }
         return $key;
     }
+    
+    public function getAuthedUser(){
+        return Auth::user();
+    }
+
 }
  
 ?>

@@ -16,5 +16,9 @@ class Facilitator extends Model
         return $this->belongsTo('App\User', 'id');
     }
 
+    public static function findById($id){
+        return self::findOrFail($id);
+    }
+
 }
 

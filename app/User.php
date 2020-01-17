@@ -46,5 +46,16 @@ class User extends Authenticatable
             "created_at" => $x->created_at->diffForHumans(),
         ];
     }
-    
+
+
+
+    public static function findByEmail($email){
+        return self::where('email', $email)->first();
+    }
+
+    public function saveUser(){
+        $this->save();
+    }
+
+
 }

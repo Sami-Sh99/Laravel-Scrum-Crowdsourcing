@@ -50,11 +50,14 @@ class LoginController extends Controller
         ]);
  
         $credentials = $request->only('email', 'password');
-        $model = User::where('email', $credentials['email'])->firstOrFail();
+        $model = User::findByEmail($credentials['email']);
+
+        //if user is not found redirect without attempting to login
+        if($model == null) return Redirect::back()->withErrors('Email or password incorrect...');
         
         //if user deactivated the redirect without attempting to login
         if($model->is_deactivated)
-            return Redirect::to("login")->withFail('Account deactivated, please contact admin to reactivate account');
+            return Redirect::back()->withErrors('Account deactivated, please contact admin to reactivate account');
             
         if (Auth::attempt($credentials)) {
             // Authentication passed...
@@ -72,6 +75,6 @@ class LoginController extends Controller
                     return redirect()->intended('/');
             }
         }
-        return Redirect::to("login")->withError('Opps! You have entered invalid credentials');
+        return Redirect::back()->withErrors('Email or password incorrect...');
     }
 }
