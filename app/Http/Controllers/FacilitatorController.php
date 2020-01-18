@@ -92,7 +92,15 @@ class FacilitatorController extends UserController
         return redirect('/facilitator/home')->with('key',$workshop->key)->with('success', 'Workshop Created');
     }
 
-    private function generateKey() {
+    public function closeWorkshop($id){
+        if(!Workshop::where('id',$id)->exists())
+            return '0';
+        Workshop::where('id',$id)->update(['is_closed'=>true]);
+        return '1';
+    }
+
+    private function generateKey() 
+    {
         $key = Str::random(7);
     
         // recursive call if the key exists already

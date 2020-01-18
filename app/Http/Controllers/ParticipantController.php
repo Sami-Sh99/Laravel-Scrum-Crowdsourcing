@@ -85,7 +85,7 @@ class ParticipantController extends UserController
             return "Already enrolled in this workshop";
 
         if($workshop->is_closed)
-            return "Workshop Closed";
+            return "Sorry you can't join, Workshop Closed";
 
         if($participants>=$workshop->required_participants)
             return "Workshop reached full capacity";
