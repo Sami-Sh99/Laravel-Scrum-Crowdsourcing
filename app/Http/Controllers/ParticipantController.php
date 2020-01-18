@@ -98,7 +98,25 @@ class ParticipantController extends UserController
         //TODO Broadcast to facilitator a new participant has joined the wokrshop
 
 
-        return 'successfully joined workshop '.$key;
+        return view('participant.workshop')
+            ->with('workshop',$workshop)
+            ->with('facilitator',User::where('id',$workshop->facilitator_id)->first());
+    }
+
+    public function showWorkshop($id)
+    {
+        $workshop=Workshop::where('id',$id) -> first(); 
+        if(!$workshop)
+            return "404 workshop not found"; //TODO Create a 404 page  
+        
+        $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id);
+        $is_participant=$workshopEnrolls->where('participant_id',auth()->user()->id)->first();
+        if(!$is_participant)
+            return "Failed, please join workshop using its key";
+
+        return view('participant.workshop')
+            ->with('workshop',$workshop)
+            ->with('facilitator',User::where('id',$workshop->facilitator_id)->first());
     }
     
     public function getAuthedUser(){

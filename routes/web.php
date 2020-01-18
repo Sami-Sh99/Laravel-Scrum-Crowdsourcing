@@ -79,12 +79,14 @@ Route::get('facilitator/workshop/create', 'FacilitatorController@showCreateWorks
 Route::post('facilitator/workshop/create', 'FacilitatorController@createWorkshop');
 Route::get('facilitator/workshop/close/{id}','FacilitatorController@closeWorkshop');
 Route::get('facilitator/workshop/end/{id}','FacilitatorController@endWorkshop');
+Route::get('facilitator/workshop/{id}','FacilitatorController@showWorkshop');
 
 //Participant
 Route::get('participant/home', 'ParticipantController@index');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
 Route::get('participant/view', 'ParticipantController@showUpdate');
 Route::get('participant/workshop/join/{key}', 'ParticipantController@joinWorkshop');
+Route::get('participant/workshop/{id}', 'ParticipantController@showWorkshop');
 
 // TEST ROUTE 
 Route::get('participant/test', function(){

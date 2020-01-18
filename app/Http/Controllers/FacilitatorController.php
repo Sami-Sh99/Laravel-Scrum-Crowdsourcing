@@ -92,6 +92,27 @@ class FacilitatorController extends UserController
         return redirect('/facilitator/home')->with('key',$workshop->key)->with('success', 'Workshop Created');
     }
 
+    public function showWorkshop($id)
+    {
+        $workshop=Workshop::where('id',$id) -> first(); 
+        if(!$workshop)
+            return "404 workshop not found"; //TODO Create a 404 page  
+        
+        $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id)->get();
+        
+        if($workshop->facilitator_id != auth()->user()->id)
+            return "Permission Denied, you did not create this workshop";
+
+        $participants=$workshopEnrolls->map(function($x){
+            $user=User::find($x->participant_id)->UserDataFilter();
+            return $user;
+        });
+        
+        return view('facilitator.workshop')
+            ->with('workshop',$workshop)
+            ->with('participants',$participants->toArray());
+    }
+
     public function closeWorkshop($id){
         if(!Workshop::where('id',$id)->exists())
             return '0';
