@@ -97,10 +97,7 @@ class ParticipantController extends UserController
 
         //TODO Broadcast to facilitator a new participant has joined the wokrshop
 
-
-        return view('participant.workshop')
-            ->with('workshop',$workshop)
-            ->with('facilitator',User::where('id',$workshop->facilitator_id)->first());
+        return redirect('/participant/workshop/'.$workshop->id);
     }
 
     public function showWorkshop($id)

@@ -89,7 +89,7 @@ class FacilitatorController extends UserController
             'success'=>'Workshop Created',
             'key'=>$workshop->key,
         );
-        return redirect('/facilitator/home')->with('key',$workshop->key)->with('success', 'Workshop Created');
+        return redirect('/facilitator/workshop/'.$workshop->id);
     }
 
     public function showWorkshop($id)
@@ -107,13 +107,14 @@ class FacilitatorController extends UserController
             $user=User::find($x->participant_id)->UserDataFilter();
             return $user;
         });
-        
+
         return view('facilitator.workshop')
             ->with('workshop',$workshop)
             ->with('participants',$participants->toArray());
     }
 
     public function closeWorkshop($id){
+        
         if(!Workshop::where('id',$id)->exists())
             return '0';
         Workshop::where('id',$id)->update(['is_closed'=>true]);
