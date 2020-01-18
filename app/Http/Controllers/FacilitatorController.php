@@ -99,6 +99,13 @@ class FacilitatorController extends UserController
         return '1';
     }
 
+    public function endWorkshop($id){
+        if(!Workshop::where('id',$id)->exists())
+            return '0';
+        Workshop::where('id',$id)->update(['has_ended'=>true]);
+        return '1';
+    }
+
     private function generateKey() 
     {
         $key = Str::random(7);

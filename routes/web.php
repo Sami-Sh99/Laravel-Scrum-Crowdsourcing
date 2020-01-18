@@ -78,6 +78,7 @@ Route::post('facilitator/deactivate', 'FacilitatorController@deactivate')->name(
 Route::get('facilitator/workshop/create', 'FacilitatorController@showCreateWorkshop');
 Route::post('facilitator/workshop/create', 'FacilitatorController@createWorkshop');
 Route::get('facilitator/workshop/close/{id}','FacilitatorController@closeWorkshop');
+Route::get('facilitator/workshop/end/{id}','FacilitatorController@endWorkshop');
 
 //Participant
 Route::get('participant/home', 'ParticipantController@index');
