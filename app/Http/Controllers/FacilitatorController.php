@@ -72,6 +72,7 @@ class FacilitatorController extends UserController
         return redirect('/home')->with('success', 'Profile Updated Successfully');
     }
 
+    //Remove
     public function showCreateWorkshop()
     {
         return view('workshop.create');
@@ -80,35 +81,36 @@ class FacilitatorController extends UserController
     public function createWorkshop(CreateWorkshop $request)
     {    
         $result = $request->validated();
-        $workshop=Workshop::Create([
+        $workshop = Workshop::createWorkshop([
             'key'=>$this->generateKey(),
             'title'=>$result['title'],
             'description'=>$result['description'],
             'required_participants'=>$result['required_participants'],
             'facilitator_id'=>$this->getAuthedUser()->id,
         ]);
-        $workshop->save();
+
         $response=array(
             'success'=>'Workshop Created',
             'key'=>$workshop->key,
         );
-        return redirect('/facilitator/workshop/'.$workshop->id);
+
+        return redirect('/facilitator/workshop/'.$workshop->key);
     }
 
-    public function showWorkshop($id)
+    public function showWorkshop($key)
     {
-        $workshop=Workshop::where('id',$id) -> first(); 
+        $workshop=Workshop::findWorkshopByKey($key); 
         if(!$workshop)
             return "404 workshop not found"; //TODO Create a 404 page  
-        
-        $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id)->get();
-        
+
+        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
+
         if($workshop->facilitator_id != $this->getAuthedUser()->id)
             return "Permission Denied, you did not create this workshop";
 
         $participants=$workshopEnrolls->map(function($x){
-            $user=User::find($x->participant_id)->UserDataFilter();
-            return $user;
+            $user=Participant::findById($x->participant_id)->user;
+            return $user->UserDataFilter();
         });
 
         return view('facilitator.workshop')
@@ -116,18 +118,17 @@ class FacilitatorController extends UserController
             ->with('participants',$participants->toArray());
     }
 
-    public function closeWorkshop($id){
-        
-        if(!Workshop::where('id',$id)->exists())
-            return '0';
-        Workshop::where('id',$id)->update(['is_closed'=>true]);
+    public function closeWorkshop($key){
+        $workshop = Workshop::findWorkshopByKey($key);
+        if(!$workshop) return '0';
+        $workshop->updateWorkshop(['is_closed'=>true]);
         return '1';
     }
 
-    public function endWorkshop($id){
-        if(!Workshop::where('id',$id)->exists())
-            return '0';
-        Workshop::where('id',$id)->update(['has_ended'=>true]);
+    public function endWorkshop($key){
+        $workshop = Workshop::findWorkshopByKey($key);
+        if(!$workshop) return '0';
+        $workshop->updateWorkshop(['has_ended'=>true]);
         return '1';
     }
 

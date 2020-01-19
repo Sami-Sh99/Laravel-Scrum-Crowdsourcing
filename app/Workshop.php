@@ -17,6 +17,21 @@ class Workshop extends Model
         'id','created_at','updated_at',
     ];
 
+    public static function createWorkshop($data){
+        $workshop =  self::Create($data);
+        $workshop->save();
+        return $workshop;
+    }
+
+    public static function findWorkshopByKey($key){
+        return self::where('key',$key)->first();
+    }
+    
+
+    public function updateWorkshop($data){
+        return $this->update($data);
+    }
+
 
     public function WorkshopDataFilter(){
         $x=$this;
