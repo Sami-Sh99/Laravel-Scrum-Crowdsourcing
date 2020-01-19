@@ -1,14 +1,59 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Join Workshop</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                                <form method="GET" action="{{ url('workshop') }}">
+                                    {{ csrf_field() }}
+            
+                                    <div class="form-group{{ $errors->has('key') ? ' has-error' : '' }}">
+                                        <div class="col-xs-12 col-sm-12 mt-20">
+                                            <input placeholder="please enter the workshop key here" id="key" type="text" class="form-control" name="key"
+                                                autofocus>
+                                            @if ($errors->has('key'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('title') }}</strong>
+                                            </span>
+                                            @endif
+            
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-12 mt-20">
+                                            <button type="submit" class="btn btn-primary">
+                                                Join
+                                            </button>
+                                        </div>
+                                    </div>
+            
+                                </form>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
   <section class="projects">
     <div class="container-fluid">
       <h1 class="header2 mb-25">Current Workshops</h1>
       <div class="row  mb-25">
         <div class="col-xs-2 col-xs-">
-          <button class="btn btn-primary btn-block btn-lg">Add Workshop</button>
+          <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#myModal">Join Workshop</button>
         </div>
       </div>
+
       <!-- Project-->
       <div class="project mb-25 has-shadow bg-white ">
         <div class="row">

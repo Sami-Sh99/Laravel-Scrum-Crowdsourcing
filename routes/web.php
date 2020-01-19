@@ -88,8 +88,8 @@ Route::get('participant/view', 'ParticipantController@showUpdate');
 
 
 //Workshop
-Route::get('participant/workshop/join/{key}', 'ParticipantController@joinWorkshop');
-Route::get('/workshop/{id}', 'ParticipantController@showWorkshop');
+Route::get('/workshop', 'ParticipantController@joinWorkshop');
+Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
 
 
 

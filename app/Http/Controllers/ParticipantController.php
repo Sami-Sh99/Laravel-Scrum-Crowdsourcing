@@ -9,6 +9,7 @@ use App\WorkshopEnrollment;
 use App\Workshop;
 use App\User;
 use App\Participant;
+use App\Facilitator;
 use Auth;
 
 class ParticipantController extends UserController
@@ -68,15 +69,24 @@ class ParticipantController extends UserController
           return redirect('/home')->with('success', 'Profile Updated Successfully');
     }
 
-    public function joinWorkshop($key)
+    public function joinWorkshop(Request $request)
     {
-        $workshop=Workshop::where('key',$key) -> first();
-        if(!$workshop)
-            return "404 workshop not found"; //TODO Create a 404 page
 
-        $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id);
+        $key = $request->input('key');
+
+        if(!$key)
+        return "key expired or no longer exists"; 
+
+        $workshop=Workshop::findWorkshopByKey($key); 
+
+        if(!$workshop) return "404 workshop not found"; //TODO Create a 404 page  
+
+        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
+
         $participants=$workshopEnrolls->count();
-        $already_participant=$workshopEnrolls->where('participant_id',auth()->user()->id)->first();
+
+        $already_participant=WorkshopEnrollment::isParticipantEnrolled($workshop->id,$this->getAuthedUser()->id);
+
 
         if($workshop->has_ended)
             return "Workshop Ended ".$workshop->updated_at->diffForHumans();
@@ -90,30 +100,35 @@ class ParticipantController extends UserController
         if($participants>=$workshop->required_participants)
             return "Workshop reached full capacity";
 
-        WorkshopEnrollment::create([
-            'participant_id'=>auth()->user()->id,
+        WorkshopEnrollment::addWorkshopEnrollment([
+            'participant_id'=>$this->getAuthedUser()->id,
             'workshop_id'=>$workshop->id,
             ]);
 
         //TODO Broadcast to facilitator a new participant has joined the wokrshop
 
-        return redirect('/participant/workshop/'.$workshop->id);
+        return redirect('workshop/'.$workshop->key);
     }
 
-    public function showWorkshop($id)
+    public function showWorkshop($key)
     {
-        $workshop=Workshop::where('id',$id) -> first(); 
+        $workshop=Workshop::findWorkshopByKey($key); 
+        
         if(!$workshop)
             return "404 workshop not found"; //TODO Create a 404 page  
-        
-        $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id);
-        $is_participant=$workshopEnrolls->where('participant_id',auth()->user()->id)->first();
-        if(!$is_participant)
+
+     $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
+
+  
+     $is_participant=WorkshopEnrollment::isParticipantEnrolled($workshop->id,$this->getAuthedUser()->id);
+
+     if(!$is_participant)
             return "Failed, please join workshop using its key";
 
         return view('participant.workshop')
             ->with('workshop',$workshop)
-            ->with('facilitator',User::where('id',$workshop->facilitator_id)->first());
+            ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user);
+            
     }
     
     public function getAuthedUser(){
