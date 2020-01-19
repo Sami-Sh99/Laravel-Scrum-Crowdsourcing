@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
 use App\Http\Requests\CreateWorkshop;
+use App\Http\Requests\UpdateUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
@@ -47,11 +50,11 @@ class FacilitatorController extends UserController
 
         $result = $request->validated();
         $user = $this->getAuthedUser();
-        if($result['Fname']) $user->Fname = $result['Fname'];
-        if($result['Lname']) $user->Lname = $result['Lname'];
-        if($result['password']) $user->password=Hash::make(trim($result['password']));
+        if(array_key_exists( 'Fname', $result )) $user->Fname = $result['Fname'];
+        if(array_key_exists( 'Lname', $result )) $user->Lname = $result['Lname'];
+        if(array_key_exists( 'password', $result )) $user->password=Hash::make(trim($result['password']));
 
-        if($result['profile']){   // Handle File Upload
+        if(array_key_exists( 'profile', $result)){   // Handle File Upload
             // Get filename with the extension
             dd($request->file('profile'));
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
@@ -60,7 +63,7 @@ class FacilitatorController extends UserController
             // Get just ext
             $extension = $request->file('profile')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore= $filename.'_'.auth()->user()->id.'.'.$extension;
+            $fileNameToStore= $filename.'_'.$this->getAuthedUser()->id.'.'.$extension;
             // Upload Image
             $path = $request->file('profile')->storeAs('public/img/profile', $fileNameToStore);
             $user->photo_link = $fileNameToStore;
@@ -82,7 +85,7 @@ class FacilitatorController extends UserController
             'title'=>$result['title'],
             'description'=>$result['description'],
             'required_participants'=>$result['required_participants'],
-            'facilitator_id'=>auth()->user()->id,
+            'facilitator_id'=>$this->getAuthedUser()->id,
         ]);
         $workshop->save();
         $response=array(
@@ -100,7 +103,7 @@ class FacilitatorController extends UserController
         
         $workshopEnrolls=WorkshopEnrollment::where('workshop_id',$workshop->id)->get();
         
-        if($workshop->facilitator_id != auth()->user()->id)
+        if($workshop->facilitator_id != $this->getAuthedUser()->id)
             return "Permission Denied, you did not create this workshop";
 
         $participants=$workshopEnrolls->map(function($x){

@@ -46,11 +46,11 @@ class ParticipantController extends UserController
         $result = $request->validated();
         $user = $this->getAuthedUser();
         
-        if($result['Fname']) $user->Fname = $result['Fname'];
-        if($result['Lname']) $user->Lname = $result['Lname'];
-        if($result['password']) $user->password=Hash::make(trim($result['password']));
+        if(array_key_exists( 'Fname', $result )) $user->Fname = $result['Fname'];
+        if(array_key_exists( 'Lname', $result )) $user->Lname = $result['Lname'];
+        if(array_key_exists( 'password', $result )) $user->password=Hash::make(trim($result['password']));
 
-        if($request->hasFile('profile')){   // Handle File Upload
+        if(array_key_exists( 'profile', $result )){   // Handle File Upload
             // Get filename with the extension
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
             // Get just filename
