@@ -37,7 +37,10 @@ class FacilitatorController extends UserController
 
         $id = $this->getAuthedUser()->id;
         $user= Facilitator::findById($id)->user;
-        return view('facilitator.home')->with('user',$user->UserDataFilter());
+        $workshops = Workshop::findAllWorkshopsByFacilitatorId($id);
+        return view('facilitator.home')
+        ->with('user',$user->UserDataFilter())
+        ->with('workshops',$workshops);
     }
     public function showUpdate(){
         $id =  $this->getAuthedUser()->id;

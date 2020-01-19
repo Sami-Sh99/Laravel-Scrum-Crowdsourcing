@@ -27,9 +27,17 @@ class Workshop extends Model
         return self::where('key',$key)->first();
     }
     
+    public static function findAllWorkshopsByFacilitatorId($id){
+        return self::where('facilitator_id',$id)->get();
+    }
 
     public function updateWorkshop($data){
         return $this->update($data);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'facilitator_id');
     }
 
 

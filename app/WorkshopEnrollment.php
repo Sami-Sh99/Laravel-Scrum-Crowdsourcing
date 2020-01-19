@@ -14,6 +14,10 @@ class WorkshopEnrollment extends Model
         return self::where('workshop_id',$id)->get();
     }
 
+    public static function findEnrollmentsByParticipantId($id){
+        return self::where('participant_id',$id)->get();
+    }
+
     public static function isParticipantEnrolled($wid, $pid){
         $res = self::where(['workshop_id' => $wid, 'participant_id' => $pid])->first();
         return $res ? true : false;
@@ -27,6 +31,12 @@ return self::create($data);
     public function findEnrolledParticipant($id){
         return $this->where('participant_id',$id)->first();
     }
+
+    public function workshop()
+    {
+        return $this->belongsTo('App\Workshop', 'workshop_id');
+    }
+
 
 }
 

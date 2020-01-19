@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUser;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use App\WorkshopEnrollment;
 use App\Workshop;
 use App\User;
@@ -32,7 +33,10 @@ class ParticipantController extends UserController
     {
         $id = $this->getAuthedUser()->id;
         $user= Participant::findById($id)->user; 
-        return view('participant.home')->with('user',$user->UserDataFilter());
+        $enrollments = WorkshopEnrollment::findEnrollmentsByParticipantId($id);
+        return view('participant.home')
+        ->with('user',$user->UserDataFilter())
+        ->with('enrollments',$enrollments);
     }
 
     public function showUpdate(){
@@ -89,17 +93,17 @@ class ParticipantController extends UserController
 
 
         if($workshop->has_ended)
-            return "Workshop Ended ".$workshop->updated_at->diffForHumans();
+        return Redirect::back()->withErrors("Workshop Ended ".$workshop->updated_at->diffForHumans());
             
         if($already_participant)
-            return "Already enrolled in this workshop";
+        return Redirect::back()->withErrors("Already enrolled in this workshop");
 
         if($workshop->is_closed)
-            return "Sorry you can't join, Workshop Closed";
+        return Redirect::back()->withErrors("Sorry you can't join, Workshop Closed");
 
         if($participants>=$workshop->required_participants)
-            return "Workshop reached full capacity";
-
+        return Redirect::back()->withErrors("Workshop reached full capacity");
+        
         WorkshopEnrollment::addWorkshopEnrollment([
             'participant_id'=>$this->getAuthedUser()->id,
             'workshop_id'=>$workshop->id,
