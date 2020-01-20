@@ -12,6 +12,7 @@ use App\User;
 use App\Participant;
 use App\Facilitator;
 use Auth;
+use App\Events\NewUser;
 
 class ParticipantController extends UserController
 {
@@ -109,7 +110,9 @@ class ParticipantController extends UserController
             'workshop_id'=>$workshop->id,
             ]);
 
-        //TODO Broadcast to facilitator a new participant has joined the wokrshop
+            $user = $this->getAuthedUser();
+
+        event(new NewUser($user->id, $user->Fname." ".$user->Lname));
 
         return redirect('workshop/'.$workshop->key);
     }

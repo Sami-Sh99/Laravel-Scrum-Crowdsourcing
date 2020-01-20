@@ -12,6 +12,7 @@
 */
 
 use App\Events\NewCard;
+use App\Events\NewUser;
 
 Route::pattern('id', '[0-9]+'); //executed if {id} is numeric
 
@@ -92,8 +93,7 @@ Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
 
 
-// TEST ROUTE 
-Route::get('participant/test', function(){
-    event(new NewCard('hello world'));
+Route::get('test', function(){
+    event(new NewCard("New Card"));
     return 'even has been sent';
 });
