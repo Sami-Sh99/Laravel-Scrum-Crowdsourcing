@@ -101,7 +101,7 @@
           <div class="col-lg-6  align-items-center">
             <div class="time"><i class="fa fa-clock-o"></i> {{$workshop->user['Fname']}} {{$workshop->user['Lname']}} </div>
             <div class="comments"><i class="fa fa-comment-o"></i>{{$workshop['required_participants']}}</div>
-            <button type="button" class="btn btn-primary btn-sm mt-20">Go To Workshop</button>
+            <button type="button" class="btn btn-primary btn-sm mt-20"> <a href="{{ url('facilitator/workshop/'.$workshop->key) }}">Go To Workshop</a></button>
           </div>
         </div>
       </div>

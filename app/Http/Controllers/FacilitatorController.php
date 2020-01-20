@@ -12,6 +12,7 @@ use App\User;
 use App\Workshop;
 use App\WorkshopEnrollment;
 use App\Facilitator;
+use App\Participant;
 use Auth;
 
 class FacilitatorController extends UserController

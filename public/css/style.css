@@ -19,6 +19,12 @@ span {
   text-decoration: none;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  
+}
+
+
+a{
+  color: inherit;
 }
 
 section {
