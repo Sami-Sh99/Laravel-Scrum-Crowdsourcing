@@ -112,7 +112,7 @@ class ParticipantController extends UserController
 
             $user = $this->getAuthedUser();
 
-        event(new NewUser($user->id, $user->Fname." ".$user->Lname));
+        event(new NewUser($user->id, $user->Fname." ".$user->Lname, $workshop->key));
 
         return redirect('workshop/'.$workshop->key);
     }

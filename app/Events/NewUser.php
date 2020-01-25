@@ -17,6 +17,7 @@ class NewUser implements ShouldBroadcast
 
     public $id;
     public $fullname;
+    public $workshop_key;
 
 
     /**
@@ -24,10 +25,11 @@ class NewUser implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($id, $fullname)
+    public function __construct($id, $fullname, $workshop_key)
     {
         $this->id = $id;
         $this->fullname = $fullname;
+        $this->workshop_key = $workshop_key;
     }
 
     /**
@@ -37,7 +39,7 @@ class NewUser implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-      return ['my-channel'];
+      return ['workshop-'.$this->workshop_key];
     }
 
     public function broadcastAs()
