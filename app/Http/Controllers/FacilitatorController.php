@@ -13,6 +13,7 @@ use App\Workshop;
 use App\WorkshopEnrollment;
 use App\Facilitator;
 use App\Participant;
+use App\Events\LaunchWorkshop;
 use Auth;
 
 class FacilitatorController extends UserController
@@ -146,10 +147,22 @@ class FacilitatorController extends UserController
         }
         return $key;
     }
+
+    public function launchWorkshop($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        $user=$this->getAuthedUser();
+        if($workshop->facilitator_id != $user->id )
+            return "Not permitted to Launch this Workshop -- you are not the workshop owner";
+        $workshop->is_closed=true;
+        $workshop->save();
+        broadcast(new LaunchWorkshop($user->id, $user->Fname." ".$user->Lname, $workshop->key));
+        return 1;
+    }
     
     public function getAuthedUser(){
         return Auth::user();
     }
+
 
 }
  

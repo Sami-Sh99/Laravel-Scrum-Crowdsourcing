@@ -6,6 +6,7 @@
     <h1>{{$workshop->title}}</h1>
     <p>{{$workshop->description}}</p>
 
+    <button id="Launch" class="btn btn-primary">Launch Workshop</button>
    
       <h3>Participants:</h3>
 
@@ -56,8 +57,18 @@
 </div>
 @endsection
 
+
+@section('scripts')
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 <script>
+
+      $("#Launch").on('click',function(){
+        console.log('launching');
+        $.get("/facilitator/workshop/{{$workshop->key}}/launch", function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+        });
+      });
+
   // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
 
@@ -68,7 +79,7 @@ var pusher = new Pusher('2e19e7364cd8170d657c', {
 
 var workshopKey = <?php echo json_encode($workshop->key) ?>; 
 
-var channel = pusher.subscribe('workshop-' + workshopKey);
+var channel = pusher.subscribe('workshop.' + workshopKey);
 channel.bind('new-user', function(data) {
 var row=document.getElementById("participants-table").insertRow();
 var cell1 = row.insertCell(0);
@@ -82,3 +93,4 @@ cell3.innerHTML = '<td style="width: 20%;"><a> Delete </a></td>';
 });
 
 </script>
+@endsection

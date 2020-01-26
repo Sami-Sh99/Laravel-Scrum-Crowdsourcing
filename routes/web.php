@@ -81,6 +81,7 @@ Route::post('facilitator/workshop/create', 'FacilitatorController@createWorkshop
 Route::get('facilitator/workshop/close/{key}','FacilitatorController@closeWorkshop');
 Route::get('facilitator/workshop/end/{key}','FacilitatorController@endWorkshop');
 Route::get('facilitator/workshop/{key}','FacilitatorController@showWorkshop');
+Route::get('facilitator/workshop/{key}/launch','FacilitatorController@launchWorkshop');
 
 //Participant
 Route::get('participant/home', 'ParticipantController@index');
