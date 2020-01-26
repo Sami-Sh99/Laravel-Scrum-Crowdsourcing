@@ -39,7 +39,7 @@ class NewUser implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-      return ['workshop-'.$this->workshop_key];
+      return ['workshop.'.$this->workshop_key];
     }
 
     public function broadcastAs()
