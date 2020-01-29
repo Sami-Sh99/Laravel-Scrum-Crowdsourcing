@@ -88,10 +88,10 @@ Route::get('participant/home', 'ParticipantController@index');
 Route::post('participant/update', 'ParticipantController@update')->name('user update');
 Route::get('participant/view', 'ParticipantController@showUpdate');
 
-
 //Workshop
 Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
+Route::get('/workshop/{key}/card/submit','ParticipantController@submitCard');
 
 
 Route::get('test', function(){

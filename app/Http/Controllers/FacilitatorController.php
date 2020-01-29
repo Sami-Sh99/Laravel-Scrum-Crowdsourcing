@@ -155,6 +155,7 @@ class FacilitatorController extends UserController
             return "Not permitted to Launch this Workshop -- you are not the workshop owner";
         $workshop->is_closed=true;
         $workshop->save();
+        $session=Session::CreateSession($workshop->id);
         broadcast(new LaunchWorkshop($user->id, $user->Fname." ".$user->Lname, $workshop->key));
         return 1;
     }

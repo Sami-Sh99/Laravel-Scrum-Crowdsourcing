@@ -9,7 +9,7 @@
         </div>
         <div id="Card" style="display:none">
         <h1>Ready to work !!</h1>
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ url('/workshop/'.$workshop->key.'/card/submit') }}" onsubmit="send(event,this)" method="POST">
             {{ csrf_field() }}
             <textarea name="card" rows="10" cols="50">
                 Write something
@@ -37,4 +37,10 @@ channel.bind('Launch', function(data) {
     document.getElementById("Loading").style.display = "none";
     document.getElementById("Card").style.display = "block";
 });
+function send(e,form) {
+  fetch(form.action,{method:'post', body: new FormData(form)});
+
+  console.log('We submit form asynchronously (AJAX)');
+  e.preventDefault();
+}
 </script>

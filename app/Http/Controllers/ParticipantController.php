@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Redirect;
 use App\WorkshopEnrollment;
 use App\Workshop;
 use App\User;
+use App\Card;
 use App\Participant;
 use App\Facilitator;
 use Auth;
 use App\Events\NewUser;
+use App\Workshop_session;
 
 class ParticipantController extends UserController
 {
@@ -136,6 +138,15 @@ class ParticipantController extends UserController
             ->with('workshop',$workshop)
             ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user);
             
+    }
+
+    public function submitCard(Request $request, $key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        //TODO validate if participant belongs to workshop
+        Card::createCard($workshop->id,auth()->user()->id);
+        Workshop_session::incrementSession($workshop->id);
+        broadcast(new SubmitCard(auth()->user()->id,'',$key));
+        return 1;
     }
     
     public function getAuthedUser(){
