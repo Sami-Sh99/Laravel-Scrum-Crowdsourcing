@@ -95,7 +95,3 @@ Route::get('/workshop/{key}/submitCard', 'ParticipantController@submitCard');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
 
 
-Route::get('test', function(){
-    event(new NewCard("New Card"));
-    return 'even has been sent';
-});
