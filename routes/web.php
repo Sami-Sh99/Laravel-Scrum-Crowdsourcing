@@ -11,7 +11,6 @@
 |
 */
 
-use App\Events\NewCard;
 use App\Events\NewUser;
 
 Route::pattern('id', '[0-9]+'); //executed if {id} is numeric
