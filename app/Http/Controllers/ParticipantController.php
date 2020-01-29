@@ -137,6 +137,11 @@ class ParticipantController extends UserController
             ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user);
             
     }
+
+    public function submitCard(Request $request){
+        error_log($request->input('content'));
+    }
+
     
     public function getAuthedUser(){
         return Auth::user();

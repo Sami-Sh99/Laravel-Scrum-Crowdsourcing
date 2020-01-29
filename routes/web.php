@@ -91,6 +91,7 @@ Route::get('participant/view', 'ParticipantController@showUpdate');
 
 //Workshop
 Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
+Route::get('/workshop/{key}/submitCard', 'ParticipantController@submitCard');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
 
 
