@@ -14,10 +14,11 @@ class Card extends Model
         return self::where('workshop_id', '=', $workshop_id)->where('participant_id','=',$participant_id)->first();
     }
     public static function createCard($workshop_id,$participant_id,$content){
-        $card= self::Create();
-        $card->participant_id=$participant_id;
-        $card->workshop_id=$workshop_id;
-        $card->content=$content;
+        $card= self::Create([
+            'participant_id'=>$participant_id,
+            'workshop_id'=>$workshop_id,
+            'content'=>$content,
+        ]);
         $card->save();
     }
 }

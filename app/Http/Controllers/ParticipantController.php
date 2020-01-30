@@ -14,6 +14,7 @@ use App\Participant;
 use App\Facilitator;
 use Auth;
 use App\Events\NewUser;
+use App\Events\SubmitCard;
 use App\Workshop_session;
 
 class ParticipantController extends UserController
@@ -143,9 +144,9 @@ class ParticipantController extends UserController
     public function submitCard(Request $request, $key){
         $workshop=Workshop::findWorkshopByKey($key);
         //TODO validate if participant belongs to workshop
-        Card::createCard($workshop->id,auth()->user()->id);
+        Card::createCard($workshop->id,auth()->user()->id, $request->all()['content']);
         Workshop_session::incrementSession($workshop->id);
-        broadcast(new SubmitCard(auth()->user()->id,'',$key));
+        broadcast(new SubmitCard(auth()->user()->id,$key));
         return 1;
     }
     

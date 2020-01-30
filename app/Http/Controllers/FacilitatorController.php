@@ -13,6 +13,7 @@ use App\Workshop;
 use App\WorkshopEnrollment;
 use App\Facilitator;
 use App\Participant;
+use App\Workshop_session;
 use App\Events\LaunchWorkshop;
 use Auth;
 
@@ -155,7 +156,7 @@ class FacilitatorController extends UserController
             return "Not permitted to Launch this Workshop -- you are not the workshop owner";
         $workshop->is_closed=true;
         $workshop->save();
-        $session=Session::CreateSession($workshop->id);
+        $session=Workshop_session::CreateSession($workshop->id);
         broadcast(new LaunchWorkshop($user->id, $user->Fname." ".$user->Lname, $workshop->key));
         return 1;
     }

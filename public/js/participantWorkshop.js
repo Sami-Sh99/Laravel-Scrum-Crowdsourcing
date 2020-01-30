@@ -20,7 +20,9 @@ channel.bind('Launch', function(data) {
 // Onclick methods
 
 $("#submit_card_btn").click(function(){
-    $.get("/workshop/"+workshopKey+"/submitCard",{content: document.getElementById("card_content").value},  function(data, status){
+    $.get("/workshop/"+workshopKey+"/card/submit",{
+      content: document.getElementById("card_content").value
+    },  function(data, status){
     console.log("Data: "+ document.getElementById("card_content").value);
   });
   });

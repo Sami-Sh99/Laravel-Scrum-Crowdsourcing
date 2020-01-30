@@ -29,7 +29,7 @@
                   <tbody>
 
                     @foreach ($participants as $item)
-                    <tr>
+                  <tr id="{{$item['id']}}">
                       <td>
                         <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
                         <a href="#" class="user-link"> {{$item['Fname']." ".$item["Lname"]}} </a>
