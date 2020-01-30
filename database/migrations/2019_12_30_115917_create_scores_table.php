@@ -17,10 +17,12 @@ class CreateScoresTable extends Migration
             $table->increments('id');
             $table->integer('participant_id')->unsigned();
             $table->integer('workshop_id')->unsigned();
-            $table->enum('score',[1, 2, 3, 4, 5]);
+            $table->integer('card_id')->unsigned();
+            $table->enum('score',[-1,0,1, 2, 3, 4, 5]);
             $table->timestamps();
             $table->foreign('workshop_id')->references('id')->on('workshops');
             $table->foreign('participant_id')->references('id')->on('participants');
+            $table->foreign('card_id')->references('id')->on('cards');
         });
     }
 

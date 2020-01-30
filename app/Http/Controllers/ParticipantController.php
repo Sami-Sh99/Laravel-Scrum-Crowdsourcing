@@ -149,6 +149,12 @@ class ParticipantController extends UserController
         broadcast(new SubmitCard(auth()->user()->id,$key));
         return 1;
     }
+
+    public function showScore($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        //TODO validate that this user submitted a card
+        return view('participant.score');
+    }
     
     public function getAuthedUser(){
         return Auth::user();

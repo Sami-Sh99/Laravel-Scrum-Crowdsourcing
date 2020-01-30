@@ -25,6 +25,7 @@ $("#submit_card_btn").click(function(){
     },  function(data, status){
     console.log("Data: "+ document.getElementById("card_content").value);
   });
+  window.location.replace("/workshop/"+workshopKey+"/scoring");
   });
   
 

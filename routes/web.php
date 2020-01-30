@@ -92,5 +92,12 @@ Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
 Route::get('/workshop/{key}/submitCard', 'ParticipantController@submitCard');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
 Route::get('/workshop/{key}/card/submit','ParticipantController@submitCard');
+Route::get('/workshop/{key}/scoring','ParticipantController@showScore');
 
 
+
+
+
+
+// Testing methods
+Route::get('/test/{key}','FacilitatorController@generateScoringSystem');

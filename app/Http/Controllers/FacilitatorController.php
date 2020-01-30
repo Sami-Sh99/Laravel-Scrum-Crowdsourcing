@@ -13,6 +13,8 @@ use App\Workshop;
 use App\WorkshopEnrollment;
 use App\Facilitator;
 use App\Participant;
+use App\Card;
+use App\Score;
 use App\Workshop_session;
 use App\Events\LaunchWorkshop;
 use Auth;
@@ -165,6 +167,49 @@ class FacilitatorController extends UserController
         return Auth::user();
     }
 
+    public function generateScoringSystem($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        //TODO Check variables not null
+        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
+        $participants=$workshopEnrolls->map(function($x){
+            $user=Participant::findById($x->participant_id)->user;
+            return $user->UserDataFilter();
+        });
+        $participants_count=$workshopEnrolls->count();
+        $Cards=Card::getCardsByWorkdshopInRandom($workshop->id);
+        $Scores=array();
+        $globalAssign=$Cards->pluck('id')->all();
+        $globalAssign= array_flip($globalAssign);
+        $globalAssign = array_fill_keys(array_keys($globalAssign), 0);
+        foreach ($participants as $participant) { 
+            $assigned=array();
+            $reservedCards=$this->getReservedCards($globalAssign);
+            $CardsNotReserver=$Cards->whereNotIn('id',$reservedCards);
+            for ($j=0; $j < env('ROUNDS',5) ; $j++) { 
+                if($participant['id'] != $this->getAuthedUser()->id){
+                    $notAssignedCard=$CardsNotReserver->whereNotIn('id',$assigned)->first();
+                    array_push($assigned,$notAssignedCard['id']);
+                    array_push($Scores,[
+                        'participant_id'=>$participant['id'],
+                        'workshop_id'=>$workshop->id,
+                        'card_id'=>$notAssignedCard['id'],
+                        'score'=>'-1',
+                    ]);
+                }
+            }
+        }
+        Score::insert($Scores);
+        return $Scores;
+    }
+
+    private function getReservedCards($globalAssign){
+        $x=array();
+        foreach ($globalAssign as $key => $value) {
+            if($value==5)
+                array_push($x,value);
+        }
+        return $x;
+    }
 
 }
  
