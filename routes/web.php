@@ -93,6 +93,7 @@ Route::get('/workshop/{key}/submitCard', 'ParticipantController@submitCard');
 Route::get('/workshop', 'ParticipantController@joinWorkshop');
 Route::get('/workshop/{key}/card/submit','ParticipantController@submitCard');
 Route::get('/workshop/{key}/scoring','ParticipantController@showScore');
+Route::get('/workshop/{key}/score/{score_id}','ParticipantController@setScore');
 
 
 

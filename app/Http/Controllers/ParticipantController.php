@@ -13,9 +13,11 @@ use App\Card;
 use App\Participant;
 use App\Facilitator;
 use Auth;
+use Session;
 use App\Events\NewUser;
 use App\Events\SubmitCard;
 use App\Workshop_session;
+use App\Score;
 
 class ParticipantController extends UserController
 {
@@ -143,17 +145,51 @@ class ParticipantController extends UserController
 
     public function submitCard(Request $request, $key){
         $workshop=Workshop::findWorkshopByKey($key);
+        $workshopEnrollsCount=WorkshopEnrollment::countParticipantsEnrolled($workshop->id);
         //TODO validate if participant belongs to workshop
         Card::createCard($workshop->id,auth()->user()->id, $request->all()['content']);
-        Workshop_session::incrementSession($workshop->id);
-        broadcast(new SubmitCard(auth()->user()->id,$key));
+        broadcast(new SubmitCard(getAuthedUser()->id,$key));
+        if(Card::countCards($workshop->id) == $workshopEnrollsCount )
+            FacilitatorController::generateScoringSystem($workshop->id);
         return 1;
     }
 
     public function showScore($key){
         $workshop=Workshop::findWorkshopByKey($key);
-        //TODO validate that this user submitted a card
-        return view('participant.score');
+        //TODO validate that this user submitted a card && workshop exists
+        $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
+        $card=Card::getCardById($score->card_id);
+        if($card == null){
+            return 'all cards scored';
+        }
+        return view('participant.score')->with('workshop',$workshop)->with('card',$card)->with('score_id',$score->id);
+    }
+
+    public function setScore(Request $request,$key,$score_id){
+        //TODO Validate workshop not null && score between 1 and 5
+        $workshop=Workshop::findWorkshopByKey($key);
+        $workshopEnrollsCount=WorkshopEnrollment::countParticipantsEnrolled($workshop->id);
+        $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
+        // dd(Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id));
+        if(Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id) != Workshop_session::getRound($workshop->id)){
+            return "Not Current Round";//TODO redirect to please wait page with flash message of ' not current round'
+        }
+        // dd($request->input('score'));
+        $score_value=$request->input('score');
+        if($score_value>5 or $score_value<0)
+            return "Score out of scope";
+        Score::setScore($score_id ,$score_value);
+        $scores_done=Workshop_session::incrementSession($workshop->id);
+        if($scores_done == $workshopEnrollsCount){
+            Workshop_session::resetDone($workshop->id);
+            $round=Session::get('round');
+            Session::put('round', $round+1);
+            //broadcast new Round
+            Session::save();
+            return "New scoring";// redirect to a new scoring screen
+        }
+        return "please wait";// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
+
     }
     
     public function getAuthedUser(){

@@ -10,8 +10,12 @@ class Card extends Model
         'participant_id','content','workshop_id',
     ];
 
-    public static function getCardById($workshop_id, $participant_id){
-        return self::where('workshop_id', '=', $workshop_id)->where('participant_id','=',$participant_id)->first();
+    public static function getCardById($id){
+        return self::find($id);
+    }
+
+    public static function countCards($workshop_id){
+        return self::where('workshop_id', '=', $workshop_id)->count();
     }
 
     public static function getCardsByWorkdshopInRandom($workshop_id){

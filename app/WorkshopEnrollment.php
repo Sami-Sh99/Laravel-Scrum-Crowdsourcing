@@ -23,6 +23,10 @@ class WorkshopEnrollment extends Model
         return $res ? true : false;
     }
 
+    public static function countParticipantsEnrolled($workshop_id){
+        return self::where('workshop_id', '=', $workshop_id)->count();
+    }
+
     public static function addWorkshopEnrollment($data){
 return self::create($data);
     }
