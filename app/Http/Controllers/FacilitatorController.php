@@ -167,16 +167,15 @@ class FacilitatorController extends UserController
         return Auth::user();
     }
 
-    public function generateScoringSystem($key){
-        $workshop=Workshop::findWorkshopByKey($key);
+    private function ScoringSystem($workshop_id){
         //TODO Check variables not null
-        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
+        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop_id);
         $participants=$workshopEnrolls->map(function($x){
             $user=Participant::findById($x->participant_id)->user;
             return $user->UserDataFilter();
         });
         $participants_count=$workshopEnrolls->count();
-        $Cards=Card::getCardsByWorkdshopInRandom($workshop->id);
+        $Cards=Card::getCardsByWorkdshopInRandom($workshop_id);
         $Scores=array();
         $globalAssign=$Cards->pluck('id')->all();
         $globalAssign= array_flip($globalAssign);
@@ -191,7 +190,7 @@ class FacilitatorController extends UserController
                     array_push($assigned,$notAssignedCard['id']);
                     array_push($Scores,[
                         'participant_id'=>$participant['id'],
-                        'workshop_id'=>$workshop->id,
+                        'workshop_id'=>$workshop_id,
                         'card_id'=>$notAssignedCard['id'],
                         'score'=>'-1',
                     ]);
@@ -199,6 +198,7 @@ class FacilitatorController extends UserController
             }
         }
         Score::insert($Scores);
+        $session=Workshop_session::ShuffleReady($workshop->id);
         return $Scores;
     }
 
@@ -210,7 +210,9 @@ class FacilitatorController extends UserController
         }
         return $x;
     }
-
+    public static function generateScoringSystem($workshopID){
+        $this->ScoringSystem($workshopID);
+    }
 }
  
 ?>

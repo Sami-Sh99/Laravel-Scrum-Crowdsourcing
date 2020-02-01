@@ -18,6 +18,7 @@ class CreateWorkshopSessionTable extends Migration
             $table->integer('workshop_id')->unique();
             $table->integer('done')->default(0);
             $table->integer('round')->default(0);
+            $table->boolean('shuffled')->default(false);
             $table->timestamps();
         });
     }
