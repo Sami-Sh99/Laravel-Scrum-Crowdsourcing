@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->index(['Fname', 'Lname']);
+            // $table->index(['Fname', 'Lname']);
         });
     }
 
