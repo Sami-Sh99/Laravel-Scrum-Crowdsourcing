@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\WorkshopEnrollment;
 use App\Participant;
 use App\Facilitator;
+use App\Workshop;
 use App\User;
+use App\Card;
 
 class UserTableSeeder extends Seeder
 {
@@ -56,5 +59,26 @@ class UserTableSeeder extends Seeder
                 ]);
             }
         }
+        $workshop=Workshop::create([
+            'facilitator_id'=>8,
+            'key'=>'www',
+            'title'=>'The Seeded Workshop',
+            'required_participants'=>6,
+            'description'=>'This is a test workshop',
+            'is_closed'=>false,
+            'has_ended'=>false,
+        ]);
+        for ($i=2; $i < 8; $i++) { 
+            $data=[
+                'participant_id'=>$i,
+                'workshop_id'=>$workshop->id
+            ];
+            WorkshopEnrollment::addWorkshopEnrollment($data);
+        }
+
+        for ($i=2; $i < 8; $i++) { 
+            Card::createCard('1',$i,"Card #".$i);
+        }
+        
     }
 }
