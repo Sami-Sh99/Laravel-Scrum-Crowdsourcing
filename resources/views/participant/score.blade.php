@@ -2,6 +2,8 @@
 @section('content')
 <div class="title">{{$workshop->title}}</div>               <br>
 <div class="description">{{$workshop->description}}</div>   <br>
+<div class="round"><h1>Round: {{$round}}</h1>   </div>   <br>
+
 <input hidden value={{$workshop->key}} id="workshop_key" />
 <input hidden value={{$score_id}} id="score_id" />
     <div class="container">
@@ -13,11 +15,12 @@
         <p class="card">{{$card->content}}</p>
         <span  class="heading">User Rating</span>
         <form method="GET" action="/workshop/{{$workshop->key}}/score/{{$score_id}}">
-            <input type="radio" id="star1" class="fa fa-2x fa-star " value="1" name="score">
-            <input type="radio" id="star2" class="fa fa-2x fa-star " value="2" name="score">
-            <input type="radio" id="star3" class="fa fa-2x fa-star " value="3" name="score">
-            <input type="radio" id="star4" class="fa fa-2x fa-star " value="4" name="score">
-            <input type="radio" id="star5" class="fa fa-2x fa-star " value="5" name="score">
+            <span id="star1" class="fa fa-2x fa-star "></span>
+            <span id="star2" class="fa fa-2x fa-star "></span>
+            <span id="star3" class="fa fa-2x fa-star "></span>
+            <span id="star4" class="fa fa-2x fa-star "></span>
+            <span id="star5" class="fa fa-2x fa-star "></span>
+            <input id="input_hidden" type="hidden" name="score" value="0">
             <button type="submit" class="btn btn-primary" id="submit_card_btn">Submit Score</button>
         </form>
         </div>

@@ -88,12 +88,13 @@ Route::post('participant/update', 'ParticipantController@update')->name('user up
 Route::get('participant/view', 'ParticipantController@showUpdate');
 
 //Workshop
+Route::get('/workshop', 'ParticipantController@joinWorkshop');
 Route::get('/workshop/{key}', 'ParticipantController@showWorkshop');
 Route::get('/workshop/{key}/submitCard', 'ParticipantController@submitCard');
-Route::get('/workshop', 'ParticipantController@joinWorkshop');
 Route::get('/workshop/{key}/card/submit','ParticipantController@submitCard');
 Route::get('/workshop/{key}/scoring','ParticipantController@showScore');
 Route::get('/workshop/{key}/score/{score_id}','ParticipantController@setScore');
+Route::get('/workshop/{key}/wait','ParticipantController@showWait');
 
 
 
@@ -101,4 +102,6 @@ Route::get('/workshop/{key}/score/{score_id}','ParticipantController@setScore');
 
 
 // Testing methods
-Route::get('/test/{key}','FacilitatorController@generateScoringSystem');
+Route::get('/test/{id}','ParticipantController@generateScoringSystem');
+Route::get('/sami','ParticipantController@sami');
+Route::get('haha',function(){phpinfo();});
