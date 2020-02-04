@@ -17,6 +17,7 @@ use Session;
 use App\Events\NewUser;
 use App\Events\SubmitCard;
 use App\Events\NextRound;
+use App\Events\FinishRounds;
 use App\Workshop_session;
 use App\Score;
 
@@ -154,7 +155,7 @@ class ParticipantController extends UserController
 
     if($session->round > 5)
         return 'workshop finished scoring';
-        
+
     if($hasCard)
         return redirect('/workshop/'.$key.'/wait');
             
@@ -215,9 +216,12 @@ class ParticipantController extends UserController
         Session::put('round', $round+1);
         Session::save();
         if($scores_done == $workshopEnrollsCount){
-            Workshop_session::resetDone($workshop->id);
+            $nextRound=Workshop_session::resetDone($workshop->id);
+            if($nextRound>5){
+                broadcast(new FinishRounds($key));
+                return 'Grouping Screen';// redirect to a Grouping screen
+            }
             broadcast(new NextRound($key));
-
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');// redirect to a new scoring screen
         }
         return redirect('/workshop/'.$key.'/wait');// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen

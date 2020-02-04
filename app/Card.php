@@ -26,6 +26,10 @@ class Card extends Model
         return self::where('workshop_id', '=', $workshop_id)->inRandomOrder()->get();
     }
 
+    public static function getCardsByWorkdshop($workshop_id){
+        return self::where('workshop_id', '=', $workshop_id)->get();
+    }
+
     public static function createCard($workshop_id,$participant_id,$content){
         $card= self::Create([
             'participant_id'=>$participant_id,

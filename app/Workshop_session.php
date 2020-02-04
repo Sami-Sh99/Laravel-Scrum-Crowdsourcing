@@ -47,5 +47,6 @@ class Workshop_session extends Model
         $session->round=$session->round + 1;
         $session->done= 0;
         $session->save();
+        return $session->round;
     }
 }

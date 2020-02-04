@@ -24,4 +24,8 @@ class Score extends Model
                     'score' => $score
                     ]);
     }
+
+    public static function getAvgScore($workshop_id,$card_id){
+        return self::where(['workshop_id'=>$workshop_id, 'card_id'=>$card_id])->pluck('score')->avg();
+    }
 }

@@ -162,6 +162,29 @@ class FacilitatorController extends UserController
         broadcast(new LaunchWorkshop($user->id, $user->Fname." ".$user->Lname, $workshop->key));
         return 1;
     }
+
+    public function displayResults($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        $cards=Card::getCardsByWorkdshop($workshop->id);
+        $results=array();
+
+        foreach ($cards as  $card) {
+            $avgScore=Score::getAvgScore($workshop->id,$card['id']);
+            array_push($results,[
+                'id'=>$card['id'],
+                'description'=>$card['content'],
+                'owner'=>User::getByID($card['participant_id'])->toArray(),
+                'average score'=>$avgScore,
+            ]);
+        }
+        usort($results, function($x,$y){
+            if ($x['average score'] == $y['average score']) {
+                return 0;
+            }
+            return ($x['average score'] > $y['average score']) ? -1 : 1;
+        });
+        return view('facilitator.workshopResult')->with('results',$results)->with('workshop',$workshop);
+    }
     
     public function getAuthedUser() {
         return Auth::user();

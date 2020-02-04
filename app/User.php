@@ -31,7 +31,9 @@ class User extends Authenticatable
     {
         return $this->role == $role ? true : false;
     }
-
+    public static function getByID($id){
+        return self::where('id',$id)->first();
+    }
 
     public function UserDataFilter(){
         $x=$this;
