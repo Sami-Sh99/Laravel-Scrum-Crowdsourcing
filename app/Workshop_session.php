@@ -15,7 +15,7 @@ class Workshop_session extends Model
     public static function createSession($id){
         $session =  self::Create([
             'workshop_id'=>$id,
-            'round'=>0,
+            'round'=>1,
         ]);
         // $session->workshop_id=$id;
         $session->save();
@@ -30,9 +30,12 @@ class Workshop_session extends Model
 
     public static function ShuffleReady($id){
         $session=self::where('workshop_id',$id)->first();
-        dd($session);
         $session->shuffled= true;
         $session->save();
+    }
+
+    public static function getSession($id){
+        return self::where('workshop_id',$id)->first();
     }
 
     public static function getRound($id){
@@ -41,7 +44,7 @@ class Workshop_session extends Model
 
     public static function resetDone($id){
         $session=self::where('workshop_id',$id)->first();
-        $session->round+=1;
+        $session->round=$session->round + 1;
         $session->done= 0;
         $session->save();
     }

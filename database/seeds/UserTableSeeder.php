@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\WorkshopEnrollment;
+use App\Workshop_session;
 use App\Participant;
 use App\Facilitator;
 use App\Workshop;
@@ -75,8 +76,10 @@ class UserTableSeeder extends Seeder
             ];
             WorkshopEnrollment::addWorkshopEnrollment($data);
         }
-
-        for ($i=2; $i < 8; $i++) { 
+        $workshop->is_closed=true;
+        Workshop_session::CreateSession($workshop->id);
+        $workshop->save();
+        for ($i=2; $i < 7; $i++) { 
             Card::createCard('1',$i,"Card #".$i);
         }
         

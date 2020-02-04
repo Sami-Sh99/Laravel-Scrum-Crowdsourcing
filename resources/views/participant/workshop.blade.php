@@ -20,10 +20,12 @@
         @else
             <div id="Card">
             <h1>Ready to work !!</h1>
-                <textarea id="card_content" name="card" rows="10" cols="50">
+            <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">
+                <textarea id="card_content" name="content" rows="10" cols="50">
                     Write something
                 </textarea><br>
-                <button class="btn btn-primary" id="submit_card_btn">Submit</button>
+                <button type="submit" class="btn btn-primary" id="submit_card_btn">Submit</button>
+            </form>
             </div>
         @endif
 

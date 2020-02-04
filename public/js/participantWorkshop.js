@@ -19,13 +19,13 @@ channel.bind('Launch', function(data) {
 
 // Onclick methods
 
-$("#submit_card_btn").click(function(){
-    $.get("/workshop/"+workshopKey+"/card/submit",{
-      content: document.getElementById("card_content").value
-    },  function(data, status){
-    console.log("Data: "+ document.getElementById("card_content").value);
-  });
-  window.location.replace("/workshop/"+workshopKey+"/scoring");
-  });
+// $("#submit_card_btn").click(function(){
+//     $.get("/workshop/"+workshopKey+"/card/submit",{
+//       content: document.getElementById("card_content").value
+//     },  function(data, status){
+//     console.log("Data: "+ document.getElementById("card_content").value);
+//   });
+//   window.location.replace("/workshop/"+workshopKey+"/scoring");
+//   });
   
 

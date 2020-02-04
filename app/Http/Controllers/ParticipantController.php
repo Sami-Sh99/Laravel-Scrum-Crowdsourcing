@@ -131,7 +131,7 @@ class ParticipantController extends UserController
             return "404 workshop not found"; //TODO Create a 404 page  
 
      $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
-  
+     $session=Workshop_session::getSession($workshop->id);
      $is_participant=WorkshopEnrollment::isParticipantEnrolled($workshop->id,$this->getAuthedUser()->id);
 
     if(!$is_participant)
@@ -152,6 +152,9 @@ class ParticipantController extends UserController
         ->with('continue','')
         ->with('wait',false);
 
+    if($session->round > 5)
+        return 'workshop finished scoring';
+        
     if($hasCard)
         return redirect('/workshop/'.$key.'/wait');
             
@@ -161,25 +164,30 @@ class ParticipantController extends UserController
         $workshop=Workshop::findWorkshopByKey($key);
         $workshopEnrollsCount=WorkshopEnrollment::countParticipantsEnrolled($workshop->id);
         //TODO validate if participant belongs to workshop
-        Card::createCard($workshop->id,auth()->user()->id, $request->all()['content']);
-        broadcast(new SubmitCard(getAuthedUser()->id,$key));
+        Card::createCard($workshop->id,auth()->user()->id, $request->input('content'));
+        broadcast(new SubmitCard($this->getAuthedUser()->id,$key));
         Session::put('round', 1);
+        Session::save();
         if(Card::countCards($workshop->id) == $workshopEnrollsCount){
             $this->generateScoringSystem($workshop->id);
             Workshop_session::resetDone($workshop->id);
             broadcast(new NextRound($key));
+            return redirect('/workshop/'.$key.'/scoring');
         }
-        Session::save();
-        return 1;
+        return redirect('/workshop/'.$key.'/wait');
     }
 
     public function showScore($key){
         $workshop=Workshop::findWorkshopByKey($key);
         //TODO validate that this user submitted a card && workshop exists
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
-
-        if($score == null)
+        $session=Workshop_session::getSession($workshop->id);
+        dd($score);
+        if($score == null and !$session->shuffled)
             return redirect('/workshop/'.$key.'/wait');
+
+        if($score == null and $session->shuffled)
+            return 'All Cards SCOREED!';
 
         $card=Card::getCardById($score->card_id);
         if($card == null){
@@ -194,8 +202,8 @@ class ParticipantController extends UserController
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
         $current_round=Workshop_session::getRound($workshop->id);
-        // dd($current_round);
-        if( $userCountScored != $current_round ){
+        // dd($userCountScored);
+        if( $userCountScored != $current_round - 1  ){
             return "Not Current Round";//TODO redirect to please wait page with flash message of 'not current round'
         }
         $score_value=$request->input('score');
@@ -203,12 +211,13 @@ class ParticipantController extends UserController
             return "Score out of scope";//TODO redirect to please wait page with flash message of 'Score out of scope'
         Score::setScore($score_id ,$score_value);
         $scores_done=Workshop_session::incrementSession($workshop->id);
+        $round=Session::get('round');
+        Session::put('round', $round+1);
+        Session::save();
         if($scores_done == $workshopEnrollsCount){
             Workshop_session::resetDone($workshop->id);
-            $round=Session::get('round');
-            Session::put('round', $round+1);
             broadcast(new NextRound($key));
-            Session::save();
+
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');// redirect to a new scoring screen
         }
         return redirect('/workshop/'.$key.'/wait');// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
@@ -218,10 +227,11 @@ class ParticipantController extends UserController
     public function showWait($key){
         $workshop=Workshop::findWorkshopByKey($key);
         $saved_round=Session::get('round');
-        dd($saved_round);
+        // dd($saved_round);
         $current_round=Workshop_session::getRound($workshop->id);
 
         if($saved_round==$current_round)
+            // dd($current_round);
             return redirect('/workshop/'.$key.'/scoring');
         return view('participant.workshopWait')->with('workshop',$workshop);
     }
@@ -280,15 +290,6 @@ class ParticipantController extends UserController
         return $Scores;
     }
 
-    private function getReservedCards($globalAssign){
-        $x=array();
-        foreach ($globalAssign as $key => $value) {
-            if($value==5)
-                array_push($x,value);
-        }
-        return $x;
-    }
-
 
     public function generateScoringSystem($workshopID){
         $this->ScoringSystem($workshopID);
@@ -297,7 +298,8 @@ class ParticipantController extends UserController
     public function sami()
     {
         dd(Session::all());
-       broadcast(new NextRound('wE0rmu8'));
+    //    broadcast(new NextRound('www'));
+       return 0;
     }
 }
 ?>
