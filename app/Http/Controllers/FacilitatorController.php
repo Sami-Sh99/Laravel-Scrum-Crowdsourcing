@@ -163,55 +163,8 @@ class FacilitatorController extends UserController
         return 1;
     }
     
-    public function getAuthedUser(){
+    public function getAuthedUser() {
         return Auth::user();
-    }
-
-    private function ScoringSystem($workshop_id){
-        //TODO Check variables not null
-        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop_id);
-        $participants=$workshopEnrolls->map(function($x){
-            $user=Participant::findById($x->participant_id)->user;
-            return $user->UserDataFilter();
-        });
-        $participants_count=$workshopEnrolls->count();
-        $Cards=Card::getCardsByWorkdshopInRandom($workshop_id);
-        $Scores=array();
-        $globalAssign=$Cards->pluck('id')->all();
-        $globalAssign= array_flip($globalAssign);
-        $globalAssign = array_fill_keys(array_keys($globalAssign), 0);
-        foreach ($participants as $participant) { 
-            $assigned=array();
-            $reservedCards=$this->getReservedCards($globalAssign);
-            $CardsNotReserver=$Cards->whereNotIn('id',$reservedCards);
-            for ($j=0; $j < env('ROUNDS',5) ; $j++) { 
-                if($participant['id'] != $this->getAuthedUser()->id){
-                    $notAssignedCard=$CardsNotReserver->whereNotIn('id',$assigned)->first();
-                    array_push($assigned,$notAssignedCard['id']);
-                    array_push($Scores,[
-                        'participant_id'=>$participant['id'],
-                        'workshop_id'=>$workshop_id,
-                        'card_id'=>$notAssignedCard['id'],
-                        'score'=>'-1',
-                    ]);
-                }
-            }
-        }
-        Score::insert($Scores);
-        $session=Workshop_session::ShuffleReady($workshop->id);
-        return $Scores;
-    }
-
-    private function getReservedCards($globalAssign){
-        $x=array();
-        foreach ($globalAssign as $key => $value) {
-            if($value==5)
-                array_push($x,value);
-        }
-        return $x;
-    }
-    public static function generateScoringSystem($workshopID){
-        $this->ScoringSystem($workshopID);
     }
 }
  

@@ -14,7 +14,8 @@ class Workshop_session extends Model
 
     public static function createSession($id){
         $session =  self::Create([
-            'workshop_id'=>$id
+            'workshop_id'=>$id,
+            'round'=>0,
         ]);
         // $session->workshop_id=$id;
         $session->save();
@@ -29,6 +30,7 @@ class Workshop_session extends Model
 
     public static function ShuffleReady($id){
         $session=self::where('workshop_id',$id)->first();
+        dd($session);
         $session->shuffled= true;
         $session->save();
     }

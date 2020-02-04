@@ -11,7 +11,11 @@ class Card extends Model
     ];
 
     public static function getCardById($id){
-        return self::find($id);
+        return self::where('id',$id)->first();
+    }
+
+    public static function getCard($workshop_id,$participant_id){
+        return self::where(['workshop_id'=> $workshop_id,'participant_id'=>$participant_id])->first();
     }
 
     public static function countCards($workshop_id){

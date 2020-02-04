@@ -16,6 +16,7 @@ use Auth;
 use Session;
 use App\Events\NewUser;
 use App\Events\SubmitCard;
+use App\Events\NextRound;
 use App\Workshop_session;
 use App\Score;
 
@@ -130,16 +131,29 @@ class ParticipantController extends UserController
             return "404 workshop not found"; //TODO Create a 404 page  
 
      $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
-
   
      $is_participant=WorkshopEnrollment::isParticipantEnrolled($workshop->id,$this->getAuthedUser()->id);
 
-     if(!$is_participant)
+    if(!$is_participant)
             return "Failed, please join workshop using its key";
-
+        $hasCard=Card::getCard($workshop->id,$this->getAuthedUser()->id);
+        // dd($hasCard);
+    if(!$workshop->is_closed)
         return view('participant.workshop')
-            ->with('workshop',$workshop)
-            ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user);
+        ->with('workshop',$workshop)
+        ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user)
+        ->with('continue','')
+        ->with('wait',true);
+
+    if(!$hasCard)
+        return view('participant.workshop')
+        ->with('workshop',$workshop)
+        ->with('facilitator', Facilitator::findById($workshop->facilitator_id)->user)
+        ->with('continue','')
+        ->with('wait',false);
+
+    if($hasCard)
+        return redirect('/workshop/'.$key.'/wait');
             
     }
 
@@ -149,8 +163,13 @@ class ParticipantController extends UserController
         //TODO validate if participant belongs to workshop
         Card::createCard($workshop->id,auth()->user()->id, $request->all()['content']);
         broadcast(new SubmitCard(getAuthedUser()->id,$key));
-        if(Card::countCards($workshop->id) == $workshopEnrollsCount )
-            FacilitatorController::generateScoringSystem($workshop->id);
+        Session::put('round', 1);
+        if(Card::countCards($workshop->id) == $workshopEnrollsCount){
+            $this->generateScoringSystem($workshop->id);
+            Workshop_session::resetDone($workshop->id);
+            broadcast(new NextRound($key));
+        }
+        Session::save();
         return 1;
     }
 
@@ -158,44 +177,127 @@ class ParticipantController extends UserController
         $workshop=Workshop::findWorkshopByKey($key);
         //TODO validate that this user submitted a card && workshop exists
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
+
+        if($score == null)
+            return redirect('/workshop/'.$key.'/wait');
+
         $card=Card::getCardById($score->card_id);
         if($card == null){
             return 'all cards scored';
         }
-        return view('participant.score')->with('workshop',$workshop)->with('card',$card)->with('score_id',$score->id);
+        return view('participant.score')->with('workshop',$workshop)->with('card',$card)->with('score_id',$score->id)->with('round',Workshop_session::getRound($workshop->id));
     }
 
     public function setScore(Request $request,$key,$score_id){
-        //TODO Validate workshop not null && score between 1 and 5
         $workshop=Workshop::findWorkshopByKey($key);
         $workshopEnrollsCount=WorkshopEnrollment::countParticipantsEnrolled($workshop->id);
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
-        // dd(Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id));
-        if(Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id) != Workshop_session::getRound($workshop->id)){
-            return "Not Current Round";//TODO redirect to please wait page with flash message of ' not current round'
+        $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
+        $current_round=Workshop_session::getRound($workshop->id);
+        // dd($current_round);
+        if( $userCountScored != $current_round ){
+            return "Not Current Round";//TODO redirect to please wait page with flash message of 'not current round'
         }
-        // dd($request->input('score'));
         $score_value=$request->input('score');
         if($score_value>5 or $score_value<0)
-            return "Score out of scope";
+            return "Score out of scope";//TODO redirect to please wait page with flash message of 'Score out of scope'
         Score::setScore($score_id ,$score_value);
         $scores_done=Workshop_session::incrementSession($workshop->id);
         if($scores_done == $workshopEnrollsCount){
             Workshop_session::resetDone($workshop->id);
             $round=Session::get('round');
             Session::put('round', $round+1);
-            //broadcast new Round
+            broadcast(new NextRound($key));
             Session::save();
-            return "New scoring";// redirect to a new scoring screen
+            return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');// redirect to a new scoring screen
         }
-        return "please wait";// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
+        return redirect('/workshop/'.$key.'/wait');// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
 
+    }
+    
+    public function showWait($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        $saved_round=Session::get('round');
+        dd($saved_round);
+        $current_round=Workshop_session::getRound($workshop->id);
+
+        if($saved_round==$current_round)
+            return redirect('/workshop/'.$key.'/scoring');
+        return view('participant.workshopWait')->with('workshop',$workshop);
     }
     
     public function getAuthedUser(){
         return Auth::user();
     }
-    
+
+    private function ScoringSystem($workshop_id){
+        //TODO Check variables not null
+        $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop_id);
+        $participants=$workshopEnrolls->map(function($x){
+            $user=Participant::findById($x->participant_id)->user;
+            return $user->UserDataFilter();
+        });
+        $participants_count=$workshopEnrolls->count();
+        $Cards=Card::getCardsByWorkdshopInRandom($workshop_id);
+        $Scores=array();
+        $globalAssign = $Cards->pluck('id')->all();
+        $globalAssign = array_flip($globalAssign);
+        $globalAssign = array_fill_keys(array_keys($globalAssign), 0);
+        $table=array();
+        foreach($participants as $participant){
+            $ColumnCard=array();
+            foreach($Cards as $card)
+                if($card['participant_id']!=$participant['id'])
+                    array_push($ColumnCard,$card['id']);
+            $table[$participant['id']]=$ColumnCard;
+        }
+        // dd($table);
+        for ($i=0; $i < 5; $i++) { 
+            foreach ($table as $participant => $assignableCard) {
+                $chooseCardIndex=array_rand($assignableCard);
+                $chooseCard=$assignableCard[$chooseCardIndex];
+                unset($table[$participant][$chooseCardIndex]);
+                $globalAssign[$chooseCard]++;
+                if($globalAssign[$chooseCard]==5){
+                    unset($globalAssign[$chooseCard]);
+                    foreach($table as $p2 => $c2){
+                        $index=array_search($chooseCard,$c2);
+                        if($index)
+                        unset($table[$participant][$index]);
+                    }
+                }
+                array_push($Scores,[
+                    'participant_id'=>$participant,
+                    'workshop_id'=>$workshop_id,
+                    'card_id'=>$chooseCard,
+                    'score'=>'-1',
+                ]);
+            }
+        }   
+
+        Score::insert($Scores);
+        $session=Workshop_session::ShuffleReady($workshop_id);
+        return $Scores;
+    }
+
+    private function getReservedCards($globalAssign){
+        $x=array();
+        foreach ($globalAssign as $key => $value) {
+            if($value==5)
+                array_push($x,value);
+        }
+        return $x;
+    }
+
+
+    public function generateScoringSystem($workshopID){
+        $this->ScoringSystem($workshopID);
+    }
+
+    public function sami()
+    {
+        dd(Session::all());
+       broadcast(new NextRound('wE0rmu8'));
+    }
 }
- 
 ?>
