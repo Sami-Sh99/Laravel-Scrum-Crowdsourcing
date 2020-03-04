@@ -109,7 +109,7 @@ class FacilitatorController extends UserController
     {
         $workshop=Workshop::findWorkshopByKey($key); 
         if(!$workshop)
-            return "404 workshop not found"; //TODO Create a 404 page  
+            return "404 workshop not found";
 
         $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
 

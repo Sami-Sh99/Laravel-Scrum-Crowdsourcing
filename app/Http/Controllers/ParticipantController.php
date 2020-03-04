@@ -91,7 +91,7 @@ class ParticipantController extends UserController
 
         $workshop=Workshop::findWorkshopByKey($key); 
 
-        if(!$workshop) return "404 workshop not found"; //TODO Create a 404 page  
+        if(!$workshop) return "404 workshop not found"; 
 
         $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
 
@@ -129,7 +129,7 @@ class ParticipantController extends UserController
         $workshop=Workshop::findWorkshopByKey($key); 
         
         if(!$workshop)
-            return "404 workshop not found"; //TODO Create a 404 page  
+            return "404 workshop not found";  
 
      $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop->id);
      $session=Workshop_session::getSession($workshop->id);
@@ -163,8 +163,11 @@ class ParticipantController extends UserController
 
     public function submitCard(Request $request, $key){
         $workshop=Workshop::findWorkshopByKey($key);
+        if(!$workshop)
+            return "404 Workshop does not exist";
         $workshopEnrollsCount=WorkshopEnrollment::countParticipantsEnrolled($workshop->id);
-        //TODO validate if participant belongs to workshop
+        if(!WorkshopEnrollment::isParticipantEnrolled($workshop->id,auth()->user()->id))
+            return "Error user not enrolled in this workshop";
         Card::createCard($workshop->id,auth()->user()->id, $request->input('content'));
         broadcast(new SubmitCard($this->getAuthedUser()->id,$key));
         Session::put('round', 1);
@@ -180,7 +183,10 @@ class ParticipantController extends UserController
 
     public function showScore($key){
         $workshop=Workshop::findWorkshopByKey($key);
-        //TODO validate that this user submitted a card && workshop exists
+        if(!$workshop)
+            return "404 Workshop does not exist";
+        if(!Card::getCard($workshop->id,auth()->user()->id))
+            return "Can not score if card was not submitted";
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $session=Workshop_session::getSession($workshop->id);
         dd($score);
@@ -219,12 +225,12 @@ class ParticipantController extends UserController
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
                 broadcast(new FinishRounds($key));
-                return 'Grouping Screen';// redirect to a Grouping screen
+                return 'Grouping Screen';// TODO redirect to a Grouping screen
             }
             broadcast(new NextRound($key));
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');// redirect to a new scoring screen
         }
-        return redirect('/workshop/'.$key.'/wait');// redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
+        return redirect('/workshop/'.$key.'/wait');// TODO redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
 
     }
     
@@ -245,8 +251,9 @@ class ParticipantController extends UserController
     }
 
     private function ScoringSystem($workshop_id){
-        //TODO Check variables not null
         $workshopEnrolls=WorkshopEnrollment::findEnrollmentsByWorkshopId($workshop_id);
+        if(!$workshopEnrolls or count($workshopEnrolls)==0)
+            return "404 Enrollments not found";
         $participants=$workshopEnrolls->map(function($x){
             $user=Participant::findById($x->participant_id)->user;
             return $user->UserDataFilter();
@@ -299,11 +306,5 @@ class ParticipantController extends UserController
         $this->ScoringSystem($workshopID);
     }
 
-    public function sami()
-    {
-        dd(Session::all());
-    //    broadcast(new NextRound('www'));
-       return 0;
-    }
 }
 ?>
