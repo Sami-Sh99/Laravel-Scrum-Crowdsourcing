@@ -11463,3 +11463,26 @@ footer {
 		-moz-transform: rotate(1080deg);
 	}
 }
+
+
+/*** Workshop ***/
+
+.workshop-header {
+
+  display: flex;
+  justify-content: space-between;
+
+}
+
+
+.workshop-card-textarea {
+
+  width: 100%;
+  height: 200px;
+  border-style: none;
+
+}
+
+ textarea:focus{
+  outline: none;
+}

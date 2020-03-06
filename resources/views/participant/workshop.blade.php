@@ -1,22 +1,34 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="container">
-        <h2>{{$workshop->title}}</h2>  
-<div class="description">{{$workshop->description}}</div>   
-<div class="facilitator">{{$facilitator->Fname}}</div>      <br>
-<input hidden value={{$workshop->key}} id="workshop_key" />
+<div class="container">
+    
+    <div class="workshop-header">
+    
+        <div class="workshop-header-left">
+            <h2>{{$workshop->title}}</h2> 
+            {{$workshop->description}} 
+        </div>
+  
+<div class="workshop-header-right" > <i class="fa fa-user"> </i>  {{$facilitator->Fname}} </div>    
+
+    </div>
+   
+    <hr>
+
+    <input hidden value={{$workshop->key}} id="workshop_key" />
+
+
 
         @if ($wait)
-        <div class="row" >
-     <div class="ml-auto"><h2>   Waiting for other participants... eh l animation fazlake l se3a 3 l soboh w zhe2et</h2></div>
+        <div class="row mt-5" >
+     <div class="col-12 my-auto" style="text-align:center" > Waiting for other participants...</div>
         <div class="cssload-dots">
             <div class="cssload-dot"></div>
             <div class="cssload-dot"></div>
             <div class="cssload-dot"></div>
             <div class="cssload-dot"></div>
-            <div class="cssload-dot"></div>
-            Waiting for other participants.... 
+            <div class="cssload-dot"></div> 
         </div>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -28,25 +40,37 @@
             </defs>
         </svg>
         </div>
-  
 
-            <div id="Card" style="display:none">
-            <h1>Ready to work !!</h1>
-                <textarea id="card_content" name="card" rows="10" cols="50">
-                    Write something
-                </textarea><br>
-                <button class="btn btn-primary" id="submit_card_btn">Submit</button>
-            </div>
+            <div id="Card" style="display:none"></div>
         @else
             <div id="Card">
-            <h1>Ready to work !!</h1>
-            <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">
-                <textarea id="card_content" name="content" rows="10" cols="50">
-                    Write something
-                </textarea><br>
-                <button type="submit" class="btn btn-primary" id="submit_card_btn">Submit</button>
+            <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Ready to work !</h2></div>
+            <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
+            <div class="row mt-2">
+                <div class="col-md-6 offset-md-3 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col">
+                            <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus>Write something 
+                            </textarea>
+                            <hr>
+                            <div style="text-align:center">
+                            <button type="submit" class="btn btn-primary " id="submit_card_btn">Submit</button>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                
             </form>
             </div>
+
+
+
+
         @endif
 
     </div>
