@@ -2,10 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Admin Dashboard</div>
+                <h2>Admin Dashboard</h2>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -14,8 +12,7 @@
                         </div>
                     @endif
 
-                    Welcome Admin are logged in!
-                    <br>
+                   <hr>
                     <label class="switch">
                         @if ($admin->auto_verify)
                             <input id="AutoVerify" type="checkbox" checked>
@@ -25,8 +22,8 @@
                             Auto verify
                         <span class="slider round"></span>
                       </label>
-                    <br>
-                    <div class="">
+                    
+                    <div >
                         <table class="table table-striped">
                            <thead>
                            <tr>
@@ -63,8 +60,6 @@
                      </div>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 
 @endsection
