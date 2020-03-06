@@ -89,15 +89,28 @@
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
-                                    <a href="home" class="dropdown-item" >
+                                    @if (Auth::user()->role == 'P')
+                                    <a href="/participant/home" class="dropdown-item" >
                                         <i class="fa fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Dashboard
                                     </a>
-                                    <a href="view" class="dropdown-item" >
+                                    <a href="/participant/view" class="dropdown-item" >
+                                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    @endif
+                                    @if (Auth::user()->role == 'F')
+                                    <a href="/facilitator/home" class="dropdown-item" >
+                                        <i class="fa fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Dashboard
+                                    </a>
+                                    <a href="/facilitator/view" class="dropdown-item" >
                                         <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
+                                    @endif
+
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();" class="dropdown-item" >
                                         <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i> Logout
