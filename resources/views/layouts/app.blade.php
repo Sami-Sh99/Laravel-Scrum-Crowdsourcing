@@ -25,7 +25,7 @@
 </head>
 
 
-<body>
+<body class="bg-light">
     <div id="app">
         <div id="wrapper">
             <div id="content-wrapper" class="d-flex flex-column">
@@ -115,20 +115,19 @@
                     @yield('content')
                 </div>
 
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2019</span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
-
-
             </div>
         </div>
     </div>
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2019</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     <!-- Scripts -->
 

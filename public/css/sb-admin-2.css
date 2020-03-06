@@ -47,6 +47,7 @@
   box-sizing: border-box;
 }
 
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -69,6 +70,7 @@ body {
   text-align: left;
   background-color: #fff;
 }
+
 
 [tabindex="-1"]:focus {
   outline: 0 !important;
@@ -10996,4 +10998,13 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+/* Sticky footer */
+
+#app {
+  min-height: calc(100vh - 70px);
+}
+footer {
+  height: 50px;
 }
