@@ -2,12 +2,16 @@
 
 @section('content')
 
+
+
 <div class="container">
-    <div class="row">
+  
+ <div class="row">
         <div class="col-sm-10">
             <h2>Profile Settings </h2>
         </div>
     </div>
+
     <div class="row mt-2">
         <div class="col-sm-3">
 
@@ -76,21 +80,21 @@
                 <div class="row">
 
                     <div class="form-group{{ $errors->has('old password') ? ' has-error' : '' }} col-sm-12">
-                            <label for="old-password" class=" control-label  mt-20">Old Password</label>
-                            <input id="old-password" type="password" class="form-control" name="old-password">
+                        <label for="old-password" class=" control-label  mt-20">Old Password</label>
+                        <input id="old-password" type="password" class="form-control" name="old-password">
 
-                            @if ($errors->has('old-password'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('old-password') }}</strong>
-                            </span>
-                            @endif
+                        @if ($errors->has('old-password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('old-password') }}</strong>
+                        </span>
+                        @endif
                     </div>
 
                 </div>
 
                 <div class="row">
 
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6">
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} col-sm-6">
                         <label for="password" class="control-label mt-20">New Password</label>
                         <input id="password" type="password" class="form-control" name="password">
                         @if ($errors->has('password'))
@@ -98,13 +102,13 @@
                             <strong>{{ $errors->first('password') }}</strong>
                         </span>
                         @endif
-                </div>
+                    </div>
 
-                <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-6">
                         <label for="password_confirmation" class="control-label">Confirm Password</label>
                         <input id="password_confirmation" type="password" class="form-control"
                             name="password_confirmation">
-                </div>
+                    </div>
                 </div>
 
                 <hr>

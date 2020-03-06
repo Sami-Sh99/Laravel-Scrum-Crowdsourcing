@@ -32,10 +32,9 @@
                 <div id="content">
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                         <!-- Sidebar Toggle (Topbar) -->
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-
+                        <div>
+                            <a href="/">  <img style="width:50px;height:50px;margin-left:10px" src="https://lh3.googleusercontent.com/9X_lPIHv5EMJggJY8ZoV5lXK9VaA-UP0e6CO3hF81n0KTmE203X7QxNMOEgGvNeuPVLS=s90" /> </a>
+                        </div>
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -90,14 +89,18 @@
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
+                                    <a href="home" class="dropdown-item" >
+                                        <i class="fa fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Dashboard
+                                    </a>
                                     <a href="view" class="dropdown-item" >
                                         <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                  document.getElementById('logout-form').submit();">
-                                        Logout
+                  document.getElementById('logout-form').submit();" class="dropdown-item" >
+                                        <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
