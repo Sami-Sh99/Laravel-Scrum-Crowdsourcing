@@ -21,7 +21,7 @@
 
 
         @if ($wait)
-        <div class="row mt-5" >
+        <div id="Loading" class="row mt-5" >
      <div class="col-12 my-auto" style="text-align:center" > Waiting for other participants...</div>
         <div class="cssload-dots">
             <div class="cssload-dot"></div>
@@ -41,7 +41,35 @@
         </svg>
         </div>
 
-            <div id="Card" style="display:none"></div>
+            <div id="Card" style="display:none">
+            
+
+                <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Ready to work !</h2></div>
+                <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
+                <div class="row mt-2">
+                    <div class="col-md-6 offset-md-3 mb-4">
+                      <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col">
+                                <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus>Write something 
+                                </textarea>
+                                <hr>
+                                <div style="text-align:center">
+                                <button type="submit" class="btn btn-primary " id="submit_card_btn">Submit</button>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    
+                </form>
+
+            
+            
+            </div>
         @else
             <div id="Card">
             <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Ready to work !</h2></div>

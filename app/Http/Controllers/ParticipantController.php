@@ -189,7 +189,7 @@ class ParticipantController extends UserController
             return "Can not score if card was not submitted";
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $session=Workshop_session::getSession($workshop->id);
-        dd($score);
+        // dd($score);
         if($score == null and !$session->shuffled)
             return redirect('/workshop/'.$key.'/wait');
 
