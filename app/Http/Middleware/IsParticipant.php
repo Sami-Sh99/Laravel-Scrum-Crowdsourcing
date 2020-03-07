@@ -19,7 +19,7 @@ class IsParticipant
         if (auth()->user() && auth()->user()->role =='P') {
             return $next($request);
         }
-            return response()->json('Not Allow');
+        return redirect()->intended('/login');
  
     }
 }

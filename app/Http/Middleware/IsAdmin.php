@@ -19,7 +19,7 @@ class IsAdmin
         if (auth()->user() && auth()->user()->role =='A') {
             return $next($request);
         }
-            return response()->json('Not Allow');
+        return redirect()->intended('/login');
  
     }
 }

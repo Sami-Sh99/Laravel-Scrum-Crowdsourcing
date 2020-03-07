@@ -20,7 +20,7 @@ class IsFacilitator
         if (auth()->user() && auth()->user()->role =='F') {
             return $next($request);
         }
-            return response()->json('Not Allow');
+        return redirect()->intended('/login');
  
     }
 }

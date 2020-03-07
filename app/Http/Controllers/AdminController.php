@@ -40,13 +40,13 @@ class AdminController extends Controller
         $task = Admin::findOrFail(1);
         $task->auto_verify=!$task->auto_verify;
         $task->save();
-        return 1;
+        return redirect()->intended('/admin');
     }
 
     public function toggleActive($id){
         $task = User::findOrFail($id);
         $task->is_deactivated=!$task->is_deactivated;
         $task->save();
-        return 1;
+        return redirect()->intended('/admin');
     }
 }
