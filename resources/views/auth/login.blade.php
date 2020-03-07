@@ -19,14 +19,43 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/welcome-style.css') }}" rel="stylesheet">
 
 </head>
 
 <body class="bg-gradient-primary">
     <div id="app">
 
-        <div class="container">
+
+        <header id="header" class="fixed-top">
+            <div>
+
+                <div class="float-left">
+                    <!-- Uncomment below if you prefer to use an image logo -->
+                    <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
+                    <a href="/"><img style="width:50px;height:50px;margin-left:15px" src="/img/logo.png" alt=""></a>
+                </div>
+
+                <nav class="main-nav float-right">
+                    <ul style="margin-right:20px">
+                        @if (Route::has('login'))
+
+                        @if (Auth::check())
+                        <li><a href="{{ url('/home') }}">Home</a></li>
+                        @else
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        @endif
+
+                        @endif
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+
+        <div style="margin-top:100px;" class="container">
 
             <!-- Outer Row -->
             <div class="row justify-content-center">
@@ -88,7 +117,7 @@
                                             <a class="small" href="#">Forgot Password?</a>
                                         </div>
                                         <div class="text-center">
-                                            <a class="small" href="#">Create an Account!</a>
+                                            <a class="small" href="/register">Create an Account!</a>
                                         </div>
                                         <hr>
                                     </div>
@@ -105,16 +134,16 @@
 
     </div>
 
-        <!-- Footer -->
-        <footer class="sticky-footer">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto text-white">
-                    <span>Copyright &copy; Your Website 2019</span>
-                </div>
+    <!-- Footer -->
+    <footer class="sticky-footer">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto text-white">
+                <span>Copyright &copy; Your Website 2019</span>
             </div>
-        </footer>
-        <!-- End of Footer -->
-        
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
 </body>
 
 </html>
