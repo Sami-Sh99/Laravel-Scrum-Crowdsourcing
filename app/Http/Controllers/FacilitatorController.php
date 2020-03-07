@@ -64,7 +64,6 @@ class FacilitatorController extends UserController
 
         if(array_key_exists( 'profile', $result)){   // Handle File Upload
             // Get filename with the extension
-            dd($request->file('profile'));
             $filenameWithExt = $request->file('profile')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
