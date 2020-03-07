@@ -46,3 +46,7 @@ var row = document.getElementById(data.id);
 row.classList.remove("danger");
 row.classList.add("success");
 });
+
+channel.bind('finish-all-rounds', function(data){
+  window.location.replace("/facilitator/workshop/"+workshopKey+"/results");
+  });

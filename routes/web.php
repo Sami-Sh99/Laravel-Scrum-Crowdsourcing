@@ -11,7 +11,7 @@
 |
 */
 
-use App\Events\NewUser;
+
 
 Route::pattern('id', '[0-9]+'); //executed if {id} is numeric
 
@@ -103,6 +103,6 @@ Route::get('/workshop/{key}/wait','ParticipantController@showWait');
 
 
 // Testing methods
-Route::get('/test/{id}','ParticipantController@generateScoringSystem');
-Route::get('/sami','ParticipantController@sami');
-Route::get('haha',function(){phpinfo();});
+// Route::get('/test/{id}','ParticipantController@generateScoringSystem');
+// Route::get('/sami','ParticipantController@sami');
+// Route::get('haha',function(){broadcast(new App\Events\FinishRounds('FVOhILL'));});

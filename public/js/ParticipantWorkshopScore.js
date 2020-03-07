@@ -19,14 +19,14 @@ var score=document.getElementById("input_hidden");
 
 // Onclick methods
 
-$("#submit_card_btn").click(function(){
-    $.get("/workshop/"+workshopKey+"/score/"+score_id,{
-      score: score.value
-    },  function(data, status){
-    console.log("Data: "+ score);
-  });
-//   window.location.replace("/workshop/"+workshopKey+"/scoring");
-  });
+// $("#submit_card_btn").click(function(){
+//     $.get("/workshop/"+workshopKey+"/score/"+score_id,{
+//       score: score.value
+//     },  function(data, status){
+//     console.log("Data: "+ score);
+//   });
+// //   window.location.replace("/workshop/"+workshopKey+"/scoring");
+//   });
 
 $("#star1").click(function(){
     score.value=1;

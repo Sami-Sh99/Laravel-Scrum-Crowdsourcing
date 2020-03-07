@@ -49,4 +49,18 @@ class Workshop_session extends Model
         $session->save();
         return $session->round;
     }
+
+    public static function initDone($id){
+        $session=self::where('workshop_id',$id)->first();
+        $session->done= 0;
+        $session->save();
+        return 0;
+    }
+
+    public static function incRound($id){
+        $session=self::where('workshop_id',$id)->first();
+        $session->round=$session->round + 1;
+        $session->save();
+        return $session->round;
+    }
 }

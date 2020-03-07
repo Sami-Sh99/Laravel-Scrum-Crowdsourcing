@@ -169,12 +169,15 @@ class ParticipantController extends UserController
         if(!WorkshopEnrollment::isParticipantEnrolled($workshop->id,auth()->user()->id))
             return "Error user not enrolled in this workshop";
         Card::createCard($workshop->id,auth()->user()->id, $request->input('content'));
-        broadcast(new SubmitCard($this->getAuthedUser()->id,$key));
-        Session::put('round', 1);
+        broadcast(new SubmitCard($this->getAuthedUser()->id,$key));//TODO check what functionality this broadcast used for
+        Session::put('round', 0);
         Session::save();
         if(Card::countCards($workshop->id) == $workshopEnrollsCount){
             $this->generateScoringSystem($workshop->id);
-            Workshop_session::resetDone($workshop->id);
+            if(Session::get('round')==0)
+                Workshop_session::initDone($workshop->id);
+            else
+                Workshop_session::resetDone($workshop->id);
             broadcast(new NextRound($key));
             return redirect('/workshop/'.$key.'/scoring');
         }
@@ -209,7 +212,8 @@ class ParticipantController extends UserController
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
         $current_round=Workshop_session::getRound($workshop->id);
-        if( $userCountScored != $current_round - 1  ){
+        if( $userCountScored != $current_round - 1 and $current_round!=1 ){
+            dd($userCountScored, $current_round, $score);
             return "Not Current Round";
         }
         $score_value=$request->input('score');
@@ -224,6 +228,7 @@ class ParticipantController extends UserController
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
                 broadcast(new FinishRounds($key));
+                broadcast(new NextRound($key));
                 return 'Grouping Screen';
             }
             broadcast(new NextRound($key));
@@ -235,11 +240,11 @@ class ParticipantController extends UserController
     public function showWait($key){
         $workshop=Workshop::findWorkshopByKey($key);
         $saved_round=Session::get('round');
-        // dd($saved_round);
+        $scores_done=Workshop_session::getSession($workshop->id)->done;
         $current_round=Workshop_session::getRound($workshop->id);
-
-        if($saved_round==$current_round)
-            // dd($current_round);
+        // dd([$saved_round, $current_round, $scores_done]);
+        if($saved_round==$current_round and $scores_done==0)
+            
             return redirect('/workshop/'.$key.'/scoring');
         return view('participant.workshopWait')->with('workshop',$workshop);
     }
