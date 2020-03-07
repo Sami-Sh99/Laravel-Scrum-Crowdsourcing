@@ -209,13 +209,12 @@ class ParticipantController extends UserController
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
         $current_round=Workshop_session::getRound($workshop->id);
-        // dd($userCountScored);
         if( $userCountScored != $current_round - 1  ){
-            return "Not Current Round";//TODO redirect to please wait page with flash message of 'not current round'
+            return "Not Current Round";
         }
         $score_value=$request->input('score');
         if($score_value>5 or $score_value<0)
-            return "Score out of scope";//TODO redirect to please wait page with flash message of 'Score out of scope'
+            return "Score out of scope";
         Score::setScore($score_id ,$score_value);
         $scores_done=Workshop_session::incrementSession($workshop->id);
         $round=Session::get('round');
@@ -225,13 +224,12 @@ class ParticipantController extends UserController
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
                 broadcast(new FinishRounds($key));
-                return 'Grouping Screen';// TODO redirect to a Grouping screen
+                return 'Grouping Screen';
             }
             broadcast(new NextRound($key));
-            return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');// redirect to a new scoring screen
+            return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');
         }
-        return redirect('/workshop/'.$key.'/wait');// TODO redirect to a please wait that waits for a pusher to broadcast, in order to redirect to new scoring screen
-
+        return redirect('/workshop/'.$key.'/wait');
     }
     
     public function showWait($key){
@@ -272,7 +270,6 @@ class ParticipantController extends UserController
                     array_push($ColumnCard,$card['id']);
             $table[$participant['id']]=$ColumnCard;
         }
-        // dd($table);
         for ($i=0; $i < 5; $i++) { 
             foreach ($table as $participant => $assignableCard) {
                 $chooseCardIndex=array_rand($assignableCard);
@@ -294,8 +291,7 @@ class ParticipantController extends UserController
                     'score'=>'-1',
                 ]);
             }
-        }   
-
+        }
         Score::insert($Scores);
         $session=Workshop_session::ShuffleReady($workshop_id);
         return $Scores;
