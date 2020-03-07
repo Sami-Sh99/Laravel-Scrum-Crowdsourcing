@@ -11485,3 +11485,41 @@ footer {
  textarea:focus{
   outline: none;
 }
+
+.blocked {
+
+
+  background-color: rgba(255, 254, 254, 0.678);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+
+}
+
+.blocked-msg {
+
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+
+}
+
+.blocked-msg i{
+
+  font-size: 120px;
+}
+
+.blocked-msg p{
+  margin-top: 10px;
+}
