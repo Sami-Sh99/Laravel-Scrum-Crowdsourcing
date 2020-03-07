@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/welcome-style.css') }}" rel="stylesheet">
 
 
 
@@ -28,7 +29,37 @@
 <body class="bg-gradient-primary">
 
     <div id="app">
-        <div class="container">
+
+
+        <header id="header" class="fixed-top">
+            <div>
+        
+              <div class="float-left">
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
+                <a href="/" ><img style="width:50px;height:50px;margin-left:15px" src="/img/logo.png" alt="" ></a>
+              </div>
+        
+              <nav class="main-nav float-right">
+                <ul style="margin-right:20px">
+                    @if (Route::has('login'))
+            
+                        @if (Auth::check())
+                            <li><a href="{{ url('/home') }}">Home</a></li>
+                        @else
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @endif
+             
+                @endif
+                </ul>
+              </nav>
+              
+            </div>
+          </header>
+
+
+        <div style="margin-top:100px;" class="container">
 
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
@@ -129,7 +160,7 @@
                                     <a class="small" href="#">Forgot Password?</a>
                                 </div>
                                 <div class="text-center">
-                                    <a class="small" href="#">Already have an account? Login!</a>
+                                    <a class="small" href="/login">Already have an account? Login!</a>
                                 </div>
                                 <hr>
                             </div>

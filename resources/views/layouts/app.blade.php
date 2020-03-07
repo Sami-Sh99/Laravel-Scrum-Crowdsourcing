@@ -33,7 +33,7 @@
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                         <!-- Sidebar Toggle (Topbar) -->
                         <div>
-                            <a href="/">  <img style="width:50px;height:50px;margin-left:10px" src="https://lh3.googleusercontent.com/9X_lPIHv5EMJggJY8ZoV5lXK9VaA-UP0e6CO3hF81n0KTmE203X7QxNMOEgGvNeuPVLS=s90" /> </a>
+                            <a href="/">  <img style="width:50px;height:50px;margin-left:10px" src="/img/logo.png" /> </a>
                         </div>
 
                         <!-- Topbar Navbar -->
