@@ -18,18 +18,21 @@ class NewUser implements ShouldBroadcast
     public $id;
     public $fullname;
     public $workshop_key;
-
+    public $email;
+    public $photo_link;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($id, $fullname, $workshop_key)
+    public function __construct($id, $fullname, $photolink, $email, $workshop_key)
     {
         $this->id = $id;
         $this->fullname = $fullname;
         $this->workshop_key = $workshop_key;
+        $this->photo_link=url('images/'.$photolink);
+        $this->email=$email;
     }
 
     /**

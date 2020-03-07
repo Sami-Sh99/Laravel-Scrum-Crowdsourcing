@@ -22,7 +22,7 @@
 
         @if ($wait)
         <div id="Loading" class="row mt-5" >
-     <div class="col-12 my-auto" style="text-align:center" > Waiting for other participants...</div>
+     <div class="col-12 my-auto" style="text-align:center" > Waiting for other participants to join workshop...</div>
         <div class="cssload-dots">
             <div class="cssload-dot"></div>
             <div class="cssload-dot"></div>
@@ -44,7 +44,7 @@
             <div id="Card" style="display:none">
             
 
-                <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Ready to work !</h2></div>
+                <div class="mb-4" style="text-align:center"> <h2 class="text-primary">We have launched! please submit your answer on the following card</h2></div>
                 <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
                 <div class="row mt-2">
                     <div class="col-md-6 offset-md-3 mb-4">
@@ -52,7 +52,7 @@
                         <div class="card-body">
                           <div class="row no-gutters align-items-center">
                             <div class="col">
-                                <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus>Write something 
+                                <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus placeholder="Write your answer...">
                                 </textarea>
                                 <hr>
                                 <div style="text-align:center">
@@ -72,7 +72,7 @@
             </div>
         @else
             <div id="Card">
-            <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Ready to work !</h2></div>
+            <div class="mb-4" style="text-align:center"> <h2 class="text-primary">We have launched! Please submit your answer on the following card</h2></div>
             <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
             <div class="row mt-2">
                 <div class="col-md-6 offset-md-3 mb-4">
@@ -80,7 +80,7 @@
                     <div class="card-body">
                       <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus>Write something 
+                            <textarea class = "workshop-card-textarea" id="card_content" name="content" autofocus placeholder="Write your answer...">
                             </textarea>
                             <hr>
                             <div style="text-align:center">

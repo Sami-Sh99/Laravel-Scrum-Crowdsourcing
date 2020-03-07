@@ -119,7 +119,7 @@ class ParticipantController extends UserController
 
             $user = $this->getAuthedUser();
 
-        broadcast(new NewUser($user->id, $user->Fname." ".$user->Lname, $workshop->key));
+        broadcast(new NewUser($user->id, $user->Fname." ".$user->Lname, $user->photo_link, $user->email, $workshop->key));
 
         return redirect('workshop/'.$workshop->key);
     }
@@ -138,7 +138,6 @@ class ParticipantController extends UserController
     if(!$is_participant)
             return "Failed, please join workshop using its key";
         $hasCard=Card::getCard($workshop->id,$this->getAuthedUser()->id);
-        // dd($hasCard);
     if(!$workshop->is_closed)
         return view('participant.workshop')
         ->with('workshop',$workshop)
@@ -154,7 +153,7 @@ class ParticipantController extends UserController
         ->with('wait',false);
 
     if($session->round > 5)
-        return 'workshop finished scoring';
+        return redirect('/participant/home')->with('success', 'Workshop Finished');
 
     if($hasCard)
         return redirect('/workshop/'.$key.'/wait');
@@ -213,7 +212,7 @@ class ParticipantController extends UserController
         $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
         $current_round=Workshop_session::getRound($workshop->id);
         if( $userCountScored != $current_round - 1 and $current_round!=1 ){
-            dd($userCountScored, $current_round, $score);
+            // dd($userCountScored, $current_round, $score);
             return "Not Current Round";
         }
         $score_value=$request->input('score');
@@ -228,8 +227,9 @@ class ParticipantController extends UserController
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
                 broadcast(new FinishRounds($key));
+                Workshop::close($workshop->id);
                 broadcast(new NextRound($key));
-                return 'Grouping Screen';
+                return redirect('/participant/home')->with('success', 'Workshop Finished');//return 'Grouping Screen';
             }
             broadcast(new NextRound($key));
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');

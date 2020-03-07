@@ -40,6 +40,11 @@ class Workshop extends Model
         return $this->belongsTo('App\User', 'facilitator_id');
     }
 
+    public function close($id){
+        $workshop=self::where('id',$id)->first();
+        $workshop->has_ended=1;
+        $workshop->save();
+    }
 
     public function WorkshopDataFilter(){
         $x=$this;

@@ -27,6 +27,7 @@ $("#Launch").on('click',function(){
 });
 var channel = pusher.subscribe('workshop.' + workshopKey);
 channel.bind('new-user', function(data) {
+  console.log(data);
 var row=document.getElementById("participants-table").insertRow();
 var cell1 = row.insertCell(0);
 var cell2 = row.insertCell(1);
@@ -34,14 +35,13 @@ var cell3 = row.insertCell(2);
 
 row.id=data.id;
 
-cell1.innerHTML = '<td><img src="https://bootdey.com/img/Content/user_1.jpg" alt=""><a href="#" class="user-link">' + data.fullname + '</a></td>';
-cell2.innerHTML = '<td><a href="#">marlon@brando.com</a></td>';
-cell3.innerHTML = '<td style="width: 20%;"><a> Delete </a></td>';
+cell1.innerHTML = '<td><img src="'+data.photo_link+'" alt=""></td>';
+cell2.innerHTML = '<td><a href="#">'+data.fullname+'</a></td>';
+cell3.innerHTML = '<td style="width: 20%;">'+data.email+'</td>';
 
 });
 
 channel.bind('submit-card', function(data){
-console.log('sami');
 var row = document.getElementById(data.id);
 row.classList.remove("danger");
 row.classList.add("success");

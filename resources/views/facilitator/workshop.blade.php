@@ -7,6 +7,8 @@
     <div class="workshop-header-left">
         <h2>{{$workshop->title}}</h2> 
         {{$workshop->description}} 
+        <br>
+        {{$workshop->key}}
     </div>
 
 <div class="workshop-header-right" > </div>    
@@ -34,8 +36,8 @@
               @foreach ($participants as $item)
               <tr  id="{{$item['id']}}">
                 <td>
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
-                  <a href="#" class="user-link"> {{$item['Fname']." ".$item["Lname"]}} </a>
+                  <img src="{{url('images/'.$item['photo_link'])}}" alt="" style="width: 200px; height: 200px;">
+                  <!-- <a href="#" class="user-link"> {{$item['Fname']." ".$item["Lname"]}} </a> -->
                 </td>
                 <td>
                   <a href="#" class="user-link"> {{$item['Fname']." ".$item["Lname"]}} </a>
