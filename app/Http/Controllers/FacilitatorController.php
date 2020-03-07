@@ -71,9 +71,9 @@ class FacilitatorController extends UserController
             // Get just ext
             $extension = $request->file('profile')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore= $filename.'_'.$this->getAuthedUser()->id.'.'.$extension;
+            $fileNameToStore= auth()->user()->id.'_'.$filename.'.'.$extension;
             // Upload Image
-            $path = $request->file('profile')->storeAs('public/img/profile', $fileNameToStore);
+            $request->file('profile')->move(public_path('images'), $fileNameToStore);
             $user->photo_link = $fileNameToStore;
         } 
         $user->saveUser();

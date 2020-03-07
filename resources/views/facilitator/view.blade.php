@@ -8,11 +8,15 @@
             <h2>Profile Settings</h2>
         </div>
     </div>
+
+    <form method="POST" action="{{ url('facilitator/update') }}" enctype="multipart/form-data">
+        {{ csrf_field() }}
     <div class="row mt-2">
         <div class="col-sm-3">
             <div class="text-center mt-3">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
-                    alt="avatar">
+                @php $photo = Auth::user()->photo_link @endphp
+                        <img src="{{ asset('images/'.$photo.'') }}" class="avatar img-circle img-thumbnail"
+                        alt="avatar"  onerror="this.src='http://ssl.gstatic.com/accounts/ui/avatar_2x.png'"  />  
                 <div class="form-group{{ $errors->has('profile') ? ' has-error' : '' }}">
                     <label for="profile" class="mt-20 control-label">Profile Photo</label>
                     <input class="form-group center btn btn-primary btn-block text-white" id="file-input" name="profile"
@@ -36,8 +40,6 @@
 
         <div class="col-sm-9">
             <hr>
-            <form method="POST" action="{{ url('facilitator/update') }}" enctype="multipart/form-data">
-                {{ csrf_field() }}
                 <div class="row">
                     <div class="form-group{{ $errors->has('Fname') ? ' has-error' : '' }} col-sm-6">
                         <label for="Fname" class="control-label">First name</label>
@@ -105,15 +107,10 @@
                         <button type="submit" class="btn btn-primary btn-block">Save</button>
                     </div>
                 </div>
-
-            </form>
-
-
-
         </div>
 
-
     </div>
+</form>
 
 </div>
 
