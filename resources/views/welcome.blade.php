@@ -39,7 +39,7 @@
      
 
         <div class="row about-extra">
-          <div class="col-lg-6 wow fadeInUp">
+          <div class="col-lg-6">
             <img src="img/about-extra-1.svg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
@@ -54,11 +54,11 @@
         </div>
 
         <div class="row about-extra">
-          <div class="col-lg-6 wow fadeInUp order-1 order-lg-2">
+          <div class="col-lg-6 order-1 order-lg-2">
             <img src="img/about-extra-2.svg" class="img-fluid" alt="">
           </div>
 
-          <div class="col-lg-6 wow fadeInUp pt-4 pt-lg-0 order-2 order-lg-1">
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1">
             <h4>Participants</h4>
             <p>
              Delectus alias ut incidunt delectus nam placeat in consequatur. Sed cupiditate quia ea quis. Voluptas nemo qui aut distinctio. Cumque fugit earum est quam officiis numquam. Ducimus corporis autem at blanditiis beatae incidunt sunt. 
@@ -90,14 +90,14 @@
 
         <div class="row">
 
-          <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-duration="1.4s">
+          <div class="col-md-6 col-lg-5 offset-lg-1" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>
               <h4 class="title"><a href="">Lorem Ipsum</a></h4>
               <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-duration="1.4s">
+          <div class="col-md-6 col-lg-5 " data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-bookmarks-outline" style="color: #e9bf06;"></i></div>
               <h4 class="title"><a href="">Dolor Sitema</a></h4>
