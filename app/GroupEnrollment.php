@@ -36,6 +36,10 @@ class GroupEnrollment extends Model
         return $this->where('participant_id',$id)->first();
     }
 
+    public static function RemoveEnrollment($gid,$pid){
+        self::where(['group_id' => $gid, 'participant_id' => $pid])->delete();
+    }
+
     public function group()
     {
         return $this->belongsTo('App\Group', 'group_id');

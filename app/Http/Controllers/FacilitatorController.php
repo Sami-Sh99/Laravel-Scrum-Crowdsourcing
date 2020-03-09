@@ -192,6 +192,8 @@ class FacilitatorController extends UserController
     }
 
     public function createGroups(Request $request, $id){
+        if(Group::findAllGroupsByWorkshopId($id))
+        return redirect('/workshop/'.$id.'/groupAdmin');
         $checkedCards=array_filter($request->all(),function($a){
             return preg_match('/^cb/', $a);
         },ARRAY_FILTER_USE_KEY);
@@ -205,7 +207,31 @@ class FacilitatorController extends UserController
                     ]
                 );
         }
-        return 'done';//TODO Redirect to a group page
+        return redirect('/workshop/'.$id.'/groupAdmin');//TODO Redirect to a group page
+    }
+
+    public function showGroup($id){
+        $groups=Group::findAllGroupsByWorkshopId($id);
+        $result=array();
+        foreach($groups as $group){
+            $group=$group->only(['id','card_id','wprkshop_id','max_participants']);
+            $singleGroup=array();
+            $participantsEnrolled=GroupEnrollment::findEnrollmentsByGroupId($group['id']);
+            foreach($participantsEnrolled as $participantEnrolled){
+                array_push($singleGroup,User::getByID($participantEnrolled->participant_id)->UserDataFilter());
+            }
+            array_push($result,[$group,$singleGroup]);
+        }
+        // dd($result);
+        return view('facilitator.groups')->with('groups',$result)->with('workshopId',$id);
+    }
+
+    public function kickGroup($wid,$gid,$pid){
+        $isEnrolled=WorkshopEnrollment::isParticipantEnrolled($wid,$pid);
+        if(!$isEnrolled)
+            return view('errors.404');
+        GroupEnrollment::RemoveEnrollment($gid,$pid);
+        return redirect()->back();
     }
 }
  

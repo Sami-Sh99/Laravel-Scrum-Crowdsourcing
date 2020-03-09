@@ -12,6 +12,8 @@ use App\User;
 use App\Card;
 use App\Participant;
 use App\Facilitator;
+use App\Group;
+use App\GroupEnrollment;
 use Auth;
 use Session;
 use App\Events\NewUser;
@@ -196,11 +198,11 @@ class ParticipantController extends UserController
             return redirect('/workshop/'.$key.'/wait');
 
         if($score == null and $session->shuffled)
-            return 'All Cards SCOREED!';
+            return redirect('/workshop/'.$key.'/group');
 
         $card=Card::getCardById($score->card_id);
         if($card == null){
-            return 'all cards scored';
+            return redirect('/workshop/'.$key.'/group');
         }
         return view('participant.score')->with('workshop',$workshop)->with('card',$card)->with('score_id',$score->id)->with('round',Workshop_session::getRound($workshop->id));
     }
@@ -226,10 +228,10 @@ class ParticipantController extends UserController
         if($scores_done == $workshopEnrollsCount){
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
-                broadcast(new FinishRounds($key));
                 Workshop::close($workshop->id);
                 broadcast(new NextRound($key));
-                return redirect('/participant/home')->with('success', 'Workshop Finished');//return 'Grouping Screen';
+                broadcast(new FinishRounds($key));
+                return redirect('/workshop/'.$key.'/group');//TODO return 'Grouping Screen';
             }
             broadcast(new NextRound($key));
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');
@@ -305,6 +307,22 @@ class ParticipantController extends UserController
 
     public function generateScoringSystem($workshopID){
         $this->ScoringSystem($workshopID);
+    }
+
+    public function showGroup($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+
+    }
+
+    public function joinGroup($key,$id){
+        $workshop=Workshop::findWorkshopByKey($key);
+        if(Group::findGroupById($id)==null || $workshop==null)
+            return view('errors.404');
+            GroupEnrollment::addGroupEnrollment([
+                'participant_id'=>auth()->user()->id,
+                'group_id'=>$id
+            ]);
+        return 1;
     }
 
 }

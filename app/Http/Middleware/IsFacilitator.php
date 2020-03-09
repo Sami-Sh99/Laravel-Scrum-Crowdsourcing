@@ -22,9 +22,9 @@ class IsFacilitator
             if(auth()->user()->is_verified)
                 return $next($request);
             else
-            return view('errors.403')->with('message','Rejected due to verifiaction restriction<... please contact admin to verify your account');
+            return redirect('403')->withMessage('Rejected due to verifiaction restriction<... please contact admin to verify your account');
         }
-            return  view('errors.403')->with('message','Unauthorized action');
+            return  redirect('403')->withMessage('Unauthorized action');
  
     }
 }

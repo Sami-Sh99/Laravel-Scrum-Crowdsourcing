@@ -18,6 +18,12 @@ Route::pattern('id', '[0-9]+'); //executed if {id} is numeric
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/404', function () {
+    return view('errors.404');
+});
+Route::get('/403', function () {
+    return view('errors.403')->with('message',Session::get('message'));
+});
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -98,6 +104,11 @@ Route::get('/workshop/{key}/scoring','ParticipantController@showScore');
 Route::get('/workshop/{key}/score/{score_id}','ParticipantController@setScore');
 Route::get('/workshop/{key}/wait','ParticipantController@showWait');
 
+//Group
+Route::get('workshop/{key}/group','ParticipantController@showGroup');
+Route::get('workshop/{key}/group/join/{id}','ParticipantController@joinGroup');
+Route::get('/facilitator/workshop/{id}/groupAdmin','FacilitatorController@showGroup');
+Route::get('/facilitator/workshop/{wid}/{gid}/kick/{pid}','FacilitatorController@kickGroup');
 
 
 

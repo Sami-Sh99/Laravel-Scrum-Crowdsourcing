@@ -16,4 +16,6 @@ channel.bind('wait-next-round', function(data) {
     window.location.replace("/workshop/"+workshopKey+"/scoring");
 });
   
-
+channel.bind('finish-all-rounds', function(data){
+  window.location.replace("/workshop/"+workshopKey+"/group");
+  });
