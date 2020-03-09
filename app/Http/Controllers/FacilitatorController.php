@@ -207,6 +207,7 @@ class FacilitatorController extends UserController
                     ]
                 );
         }
+        broadcast(new NewGroug($key));
         return redirect('/workshop/'.$id.'/groupAdmin');//TODO Redirect to a group page
     }
 

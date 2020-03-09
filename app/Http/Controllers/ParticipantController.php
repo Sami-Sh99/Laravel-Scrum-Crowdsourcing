@@ -246,8 +246,9 @@ class ParticipantController extends UserController
         $current_round=Workshop_session::getRound($workshop->id);
         // dd([$saved_round, $current_round, $scores_done]);
         if($saved_round==$current_round and $scores_done==0)
-            
             return redirect('/workshop/'.$key.'/scoring');
+        if(Group::findGroupById($workshop->id)!=null)
+            return redirect('workshop/'.$key.'/group');
         return view('participant.workshopWait')->with('workshop',$workshop);
     }
     
@@ -309,9 +310,29 @@ class ParticipantController extends UserController
         $this->ScoringSystem($workshopID);
     }
 
-    public function showGroup($key){
+    public function showGroups($key){
         $workshop=Workshop::findWorkshopByKey($key);
+        $groups=Group::findAllGroupsByWorkshopId($workshop->id);
+        $has_group=GroupEnrollment::findEnrollmentsByParticipantId(auth()->user()->id);
+        if($has_group!=null)
+            return redirect('workshop/'.$key.'/group/'.$has_group->id);
+        $result=array();
+        foreach($groups as $group){
+            // dd($group);
+            array_push($result,[
+                'id'=>$group->id,
+                'idea'=>Card::getCardById($group->card_id)->content,
+                'max'=>$group->max_participants
+            ]);
+        }
+        // dd($result);
+        return view('participant.groups')->with('groups',$result)->with('key',$key);
+    }
 
+    public function showGroup($key,$id){
+        $workshop=Workshop::findWorkshopByKey($key);
+        $group=Group::findGroupById($id);
+        return view('participant.group')->with('group',$group)->with('key',$key);
     }
 
     public function joinGroup($key,$id){
@@ -322,7 +343,14 @@ class ParticipantController extends UserController
                 'participant_id'=>auth()->user()->id,
                 'group_id'=>$id
             ]);
-        return 1;
+        return redirect('/workshop/'.$key.'/group/'.$id);
+    }
+    public function leaveGroup($key,$id){
+        $workshop=Workshop::findWorkshopByKey($key);
+        if(Group::findGroupById($id)==null || $workshop==null)
+            return view('errors.404');
+            GroupEnrollment::RemoveEnrollment($id,auth()->user()->id);
+        return redirect('/workshop/'.$key.'/group');
     }
 
 }

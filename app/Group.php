@@ -27,6 +27,10 @@ class Group extends Model
     public function updateGroup($data){
         return $this->update($data);
     }
+    public function card()
+    {
+        return $this->belongsTo('App\Card', 'card_id');
+    }
 
     // public function GroupDataFilter(){
     //     $x=$this;
