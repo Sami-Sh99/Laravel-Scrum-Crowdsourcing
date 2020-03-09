@@ -27,6 +27,19 @@
 
 <body class="bg-light">
     <div id="app">
+        @if ( Auth::user()->is_verified  == 0 && Auth::user()->role !='A')
+
+        <div class="blocked"></div>
+        <div class="blocked-msg">
+            <i class="fa fa-lock"> </i>
+            <p> Account not verified, please contact an Administrator to verify your account </p>
+        </div>
+
+        
+
+        @else
+
+
         <div id="wrapper">
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
@@ -132,6 +145,8 @@
 
             </div>
         </div>
+
+        @endif
     </div>
 
         <!-- Footer -->

@@ -35,8 +35,6 @@
             <div>
         
               <div class="float-left">
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
                 <a href="/" ><img style="width:50px;height:50px;margin-left:15px" src="/img/logo.png" alt="" ></a>
               </div>
         

@@ -24,7 +24,7 @@ class IsFacilitator
             else
             return redirect('403')->withMessage('Rejected due to verifiaction restriction<... please contact admin to verify your account');
         }
-            return  redirect('403')->withMessage('Unauthorized action');
+        return redirect()->intended('/login');
  
     }
 }
