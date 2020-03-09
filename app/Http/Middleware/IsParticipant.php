@@ -17,9 +17,12 @@ class IsParticipant
     public function handle($request, Closure $next)
     {
         if (auth()->user() && auth()->user()->role =='P') {
-            return $next($request);
+            if(auth()->user()->is_verified)
+                return $next($request);
+            else
+                return view('errors.403')->with('message','Rejected due to verifiaction restriction<... please contact admin to verify your account');
         }
-            return response()->json('Not Allow');
+            return view('errors.403')->with('message','Unauthorized action');
  
     }
 }

@@ -18,9 +18,13 @@ class IsFacilitator
     {
     
         if (auth()->user() && auth()->user()->role =='F') {
-            return $next($request);
+                return $next($request);
+            if(auth()->user()->is_verified)
+                return $next($request);
+            else
+            return view('errors.403')->with('message','Rejected due to verifiaction restriction<... please contact admin to verify your account');
         }
-            return response()->json('Not Allow');
+            return  view('errors.403')->with('message','Unauthorized action');
  
     }
 }
