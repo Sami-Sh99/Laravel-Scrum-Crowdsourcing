@@ -17,6 +17,8 @@ use App\Card;
 use App\Score;
 use App\Workshop_session;
 use App\Events\LaunchWorkshop;
+use App\Group;
+use App\GroupEnrollment;
 use Auth;
 
 class FacilitatorController extends UserController
@@ -187,6 +189,23 @@ class FacilitatorController extends UserController
     
     public function getAuthedUser() {
         return Auth::user();
+    }
+
+    public function createGroups(Request $request, $id){
+        $checkedCards=array_filter($request->all(),function($a){
+            return preg_match('/^cb/', $a);
+        },ARRAY_FILTER_USE_KEY);
+        foreach( $checkedCards as $cardId){
+            if($request['nb'.$cardId])
+                Group::createGroup(
+                    [
+                        'workshop_id'=>$id,
+                        'card_id'=>$cardId,
+                        'max_participants'=>$request['nb'.$cardId],
+                    ]
+                );
+        }
+        return 'done';//TODO Redirect to a group page
     }
 }
  
