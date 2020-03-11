@@ -7,40 +7,63 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+# About Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Motivation
+‘25/10 Crowd Sourcing’ is a structure that allows you to rapidly generate and sift through a group’s boldest actionable ideas in less than 30 minutes. We’ve applied this structure both to small (12–20 members) and large groups (>150). Not only is it an innovative way to identify bold, ‘out of the box’-solutions, it is also appreciated by participants for its highly active nature.
+This project proposes a digital solution to enable distributed teams to benefit from the crowd sourcing structure, with unlimited number of participants and from all around the globe.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Read this article](https://medium.com/the-liberators/use-25-10-crowd-sourcing-to-spice-up-your-scrum-events-56fdd127e1dc) for more info about Crowd Sourcing.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+## Usage
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+## Setup
 
-## Laravel Sponsors
+### Git Clone
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
+```
+$ git clone git@github.com:Sami-Sh99/Laravel-Scrum-Crowdsourcing.git
+$ cd Laravel-Scrum-Crowdsourcing
+$ composer install
+```
 
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
+**Important**: If you have not the .env file in root folder, you must copy or rename the .env.example to .env
+
+```
+php artisan key:generate
+```
+#### Database
+
+.env file
+
+```
+DB_CONNECTION=mysql
+DB_HOST=XXXXXX
+DB_PORT=3306
+DB_DATABASE=XXXXX
+DB_USERNAME=XXXX
+DB_PASSWORD=XXXXX
+```
+
+**Remember**: Create the database before run artisan command.
+
+```
+php artisan migrate
+```
+#### Pusher Broadcast
+[Create a Pusher account](https://dashboard.pusher.com/accounts), then create a Channels app. Go to the **Keys** page for that app, and make a note of your *_app_id_*, *_key_*, *_secret_*.
+.env file
+```
+PUSHER_APP_ID=XXXX
+PUSHER_APP_KEY=XXXXXXXX
+PUSHER_APP_SECRET=XXXXXXXX
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+PRs and issues are welcome. In addition to the issue section we have a [Trello board](https://trello.com/b/rrlSUI0h/laravel-scrum-system) listing things that need to be done.
 
 ## Security Vulnerabilities
 
@@ -48,4 +71,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The Laravel **Project Name** is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+## Thanks
+
+### Main Team Contributor: [@Hkataya](https://github.com/Hkataya) 
+
+- [Laravel PHP Framework](https://github.com/laravel/laravel)
+
+- [Pusher.js](https://github.com/pusher/pusher-js)
