@@ -12,7 +12,7 @@
       </div>
 
       <div class="intro-info">
-        <h2>We provide<br><span>solutions</span><br>for your business!</h2>
+        <h2>We provide<br><span>ideas</span><br>for your business!</h2>
         <div>
           <a href="#about" class="btn-get-started scrollto">Get Started</a>
           <a href="#services" class="btn-services scrollto">How it works</a>
@@ -33,7 +33,9 @@
 
         <header class="section-header">
           <h3>About Us</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>The main goal of this project is to transform crowd sourcing from a complex and limited participation, into a simple and scalable participation.
+            It proposes a digital solution to enable distributed teams to benefit from the crowd sourcing structure, with unlimited number of participants and from all around the globe.
+          </p>
         </header>
 
      
@@ -45,10 +47,10 @@
           <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
             <h4>Facilitators</h4>
             <p>
-              Ipsum in aspernatur ut possimus sint. Quia omnis est occaecati possimus ea. Quas molestiae perspiciatis occaecati qui rerum. Deleniti quod porro sed quisquam saepe. Numquam mollitia recusandae non ad at et a.
+              A facilitator is the person running the scrum game; he or she proposes the problem to be solved and receives the results of the game.
             </p>
             <p>
-              Ad vitae recusandae odit possimus. Quaerat cum ipsum corrupti. Odit qui asperiores ea corporis deserunt veritatis quidem expedita perferendis. Qui rerum eligendi ex doloribus quia sit. Porro rerum eum eum.
+              Facilitators will benefit from saving the workshop data in a structured database without the need to store the messy cards physically.
             </p>
           </div>
         </div>
@@ -61,14 +63,14 @@
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1">
             <h4>Participants</h4>
             <p>
-             Delectus alias ut incidunt delectus nam placeat in consequatur. Sed cupiditate quia ea quis. Voluptas nemo qui aut distinctio. Cumque fugit earum est quam officiis numquam. Ducimus corporis autem at blanditiis beatae incidunt sunt. 
+              A participant can participate in workshops created by the facilitators where they can submit digital cards and score other participants’ cards without passing any card by hand.
             </p>
-            <p>
+            {{-- <p>
               Voluptas saepe natus quidem blanditiis. Non sunt impedit voluptas mollitia beatae. Qui esse molestias. Laudantium libero nisi vitae debitis. Dolorem cupiditate est perferendis iusto.
             </p>
             <p>
               Eum quia in. Magni quas ipsum a. Quis ex voluptatem inventore sint quia modi. Numquam est aut fuga mollitia exercitationem nam accusantium provident quia.
-            </p>
+            </p> --}}
           </div>
           
         </div>
@@ -84,8 +86,8 @@
       <div class="container">
 
         <header class="section-header">
-          <h3>Services</h3>
-          <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
+          <h3>Steps to Crowd Source</h3>
+          <p>Scrum encourages teams to learn through experiences, self-organize while working on a problem, and reflect on their wins and losses to continuously improve.</p>
         </header>
 
         <div class="row">
@@ -93,45 +95,44 @@
           <div class="col-md-6 col-lg-5 offset-lg-1" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <h4 class="title"><a href="">Introduce a question </a></h4>
+              <p class="description">that is desired to gather actionable ideas for, e.g. “What is your boldest solution to [X]”. Ask participants to write down their bold idea and the first step on the front of the index card, and hold up their hand (with the card) when they’re done.</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-5 " data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-bookmarks-outline" style="color: #e9bf06;"></i></div>
-              <h4 class="title"><a href="">Dolor Sitema</a></h4>
-              <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+              <h4 class="title"><a href="">Mill & Pass</a></h4>
+              <p class="description">When everyone is done writing their card, ask participants to start walking around and exchanging cards with other people without reading the cards. Let people walk around until a signal is given (after about 20–30 seconds).</p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-paper-outline" style="color: #3fcdc7;"></i></div>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+              <h4 class="title"><a href="">Read & Score</a></h4>
+              <p class="description">Ask people to stop exchanging cards. Check to make sure that everyone has one card in his or her hand, exchanging cards with a neighbor if he or she received their own. Ask participants to rate the idea on their card on a scale from 1 to 5 (1 meaning “not my cup of tea” and 5 meaning “I’m totally in for this”). The score can be written down on the back of the card (leaving room for 4 more scores).</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-speedometer-outline" style="color:#41cf2e;"></i></div>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+              <h4 class="title"><a href="">4 more rounds of ‘Mill & Pass’ and ‘Read & Score’ </a></h4>
+              <p class="description">until every index card has five scores on the back. To avoid errors, a generally question is asked to people after every round of ‘Read & Score’ to verify that their card has as many scores as completed rounds on the back, and that individual scores range between 1 and 5. Ask participants to sum the score after the fifth round of ‘Read & Score’, resulting in a minimum of 5 and a maximum of 25.</p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-world-outline" style="color: #d6ff22;"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
+              <h4 class="title"><a href="">Identify the ideas with the highest scores</a></h4>
+              <p class="description">this step can be done by asking participants to step forward with high scores (counting down from 25), or by asking people to self-organize into a line from low (5) to high (25). Let people with the highest scoring cards present the idea and first step written on them.</p>            </div>
           </div>
           <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
             <div class="box">
               <div class="icon"><i class="ion-ios-clock-outline" style="color: #4680ff;"></i></div>
-              <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-              <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+              <h4 class="title"><a href="">Get Results</a></h4>
+              <p class="description">Use the highest scoring ideas as ideas as input for the next step in the workshop or Scrum Event.</p>
             </div>
           </div>
 
