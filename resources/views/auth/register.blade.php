@@ -173,7 +173,7 @@
   <footer class="sticky-footer">
     <div class="container my-auto">
         <div class="copyright text-center my-auto text-white">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; 25/10 Crowd Sourcing 2020</span>
         </div>
     </div>
 </footer>

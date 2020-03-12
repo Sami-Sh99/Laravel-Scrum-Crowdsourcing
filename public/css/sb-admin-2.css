@@ -11550,3 +11550,12 @@ footer {
   color:var(--yellow);
 
 }
+
+.number_icon {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+}
