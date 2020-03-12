@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
     {
         $participants=array();
         $letter='a';
-        for ($i = 1; $i < 7 ; $i++) { 
+        for ($i = 1; $i < 11 ; $i++) { 
             array_push($participants,
                 [
                     'Fname'=>'t'.$i,
@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
                     'Lname'=>'testing',
                     'role'=>'F',
                     'password'=>'11111111',
-                    'email'=> 'h@h.h'
+                    'email'=> 'z@z.z'
                 ]);
         $this->command->info('users Created!');
         foreach ($participants as $data) {
@@ -61,15 +61,15 @@ class UserTableSeeder extends Seeder
             }
         }
         $workshop=Workshop::create([
-            'facilitator_id'=>8,
+            'facilitator_id'=>12,
             'key'=>'www',
             'title'=>'The Seeded Workshop',
-            'required_participants'=>6,
+            'required_participants'=>10,
             'description'=>'This is a test workshop description',
             'is_closed'=>false,
             'has_ended'=>false,
         ]);
-        for ($i=2; $i < 8; $i++) { 
+        for ($i=2; $i < 12; $i++) { 
             $data=[
                 'participant_id'=>$i,
                 'workshop_id'=>$workshop->id
@@ -79,7 +79,7 @@ class UserTableSeeder extends Seeder
         $workshop->is_closed=true;
         Workshop_session::CreateSession($workshop->id);
         $workshop->save();
-        for ($i=2; $i < 7; $i++) { 
+        for ($i=2; $i < 11; $i++) { 
             Card::createCard('1',$i,"Card #".$i);
         }
         

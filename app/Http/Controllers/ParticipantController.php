@@ -278,17 +278,26 @@ class ParticipantController extends UserController
         }
         for ($i=0; $i < 5; $i++) { 
             foreach ($table as $participant => $assignableCard) {
-                $chooseCardIndex=array_rand($assignableCard);
+                if(!count($table[$participant]))
+                    continue;
+                $chooseCardIndex=array_rand($table[$participant]);
                 $chooseCard=$assignableCard[$chooseCardIndex];
-                unset($table[$participant][$chooseCardIndex]);
-                $globalAssign[$chooseCard]++;
+                $chooseCard=$table[$participant][$chooseCardIndex];
+                try {
+                    $globalAssign[$chooseCard]++;
+                    unset($table[$participant][$chooseCardIndex]);
+                } catch (\Throwable $th) {
+                    dd($globalAssign, $table, $chooseCard, $chooseCardIndex, $i, $participant, $assignableCard, $Scores, $th);
+                }
                 if($globalAssign[$chooseCard]==5){
                     unset($globalAssign[$chooseCard]);
                     foreach($table as $p2 => $c2){
                         $index=array_search($chooseCard,$c2);
-                        if($index)
-                        unset($table[$participant][$index]);
+                        foreach($c2 as $x=>$y)
+                            if(strcmp($y,$chooseCard)==0)
+                                unset($table[$p2][$x]);
                     }
+                    // dd($chooseCard, $globalAssign, $table, $i);
                 }
                 array_push($Scores,[
                     'participant_id'=>$participant,
