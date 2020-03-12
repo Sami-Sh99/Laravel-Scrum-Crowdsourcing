@@ -2,6 +2,7 @@
 @section('content')
 
 @if ($workshop->is_closed)
+<input hidden id="workshop_key" value="{{$workshop->key}}" />
   <div  class="row mt-5" >
     <div class="col-12 my-auto" style="text-align:center" > Please wait until rating process ends </div>
        <div class="cssload-dots">
