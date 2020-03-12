@@ -41,9 +41,11 @@
     <div class="container">
 
       @if ($errors->any())
-      <span class="help-block">
-        <strong>{{ $errors->first() }}</strong>
-      </span>
+      <div class="row justify-content-center mb-3">
+        <div style="text-align:center" class="col-12 help-block">
+            <strong>{{$errors->first()}}</strong>
+            </div>
+          </div>
       @endif
 
 

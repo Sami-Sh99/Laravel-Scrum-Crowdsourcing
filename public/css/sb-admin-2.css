@@ -11541,3 +11541,12 @@ footer {
 .blocked-msg p{
   margin-top: 10px;
 }
+
+/** CARD STARS **/
+
+
+.checked {
+
+  color:var(--yellow);
+
+}

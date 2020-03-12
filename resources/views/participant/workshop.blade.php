@@ -44,7 +44,7 @@
             <div id="Card" style="display:none">
             
 
-                <div class="mb-4" style="text-align:center"> <h2 class="text-primary">We have launched! please submit your answer on the following card</h2></div>
+                <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Please submit your answer below</h2></div>
                 <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
                 <div class="row mt-2">
                     <div class="col-md-6 offset-md-3 mb-4">
@@ -72,7 +72,7 @@
             </div>
         @else
             <div id="Card">
-            <div class="mb-4" style="text-align:center"> <h2 class="text-primary">We have launched! Please submit your answer on the following card</h2></div>
+            <div class="mb-4" style="text-align:center"> <h2 class="text-primary">Please submit your answer below</h2></div>
             <form method="GET" action="/workshop/{{$workshop->key}}/card/submit">  
             <div class="row mt-2">
                 <div class="col-md-6 offset-md-3 mb-4">
