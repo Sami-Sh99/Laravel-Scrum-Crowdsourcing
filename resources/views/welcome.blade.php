@@ -14,7 +14,7 @@
       <div class="intro-info">
         <h2>We provide<br><span>ideas</span><br>for your business!</h2>
         <div>
-          <a href="#about" class="btn-get-started scrollto">Get Started</a>
+          <a href="/login" class="btn-get-started scrollto">Get Started</a>
           <a href="#services" class="btn-services scrollto">How it works</a>
         </div>
       </div>

@@ -17,6 +17,7 @@ use App\Card;
 use App\Score;
 use App\Workshop_session;
 use App\Events\LaunchWorkshop;
+use App\Events\NewGroup;
 use App\Group;
 use App\GroupEnrollment;
 use Auth;
@@ -192,8 +193,8 @@ class FacilitatorController extends UserController
     }
 
     public function createGroups(Request $request, $id){
-        if(Group::findAllGroupsByWorkshopId($id))
-        return redirect('/workshop/'.$id.'/groupAdmin');
+        if(count(Group::findAllGroupsByWorkshopId($id)->all())!=0)
+        return redirect('/facilitator/workshop/'.$id.'/groupAdmin');
         $checkedCards=array_filter($request->all(),function($a){
             return preg_match('/^cb/', $a);
         },ARRAY_FILTER_USE_KEY);
@@ -207,8 +208,9 @@ class FacilitatorController extends UserController
                     ]
                 );
         }
-        broadcast(new NewGroug($key));
-        return redirect('/workshop/'.$id.'/groupAdmin');//TODO Redirect to a group page
+
+        broadcast(new NewGroup(Workshop::findWorkshopById($id)->key));
+        return redirect('facilitator/workshop/'.$id.'/groupAdmin');
     }
 
     public function showGroup($id){

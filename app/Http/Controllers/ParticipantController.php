@@ -193,7 +193,6 @@ class ParticipantController extends UserController
             return "Can not score if card was not submitted";
         $score=Score::getNonScoredCardById($workshop->id,$this->getAuthedUser()->id);
         $session=Workshop_session::getSession($workshop->id);
-        // dd($score);
         if($score == null and !$session->shuffled)
             return redirect('/workshop/'.$key.'/wait');
 
@@ -214,7 +213,6 @@ class ParticipantController extends UserController
         $userCountScored=Score::countHowManyScored($workshop->id,$this->getAuthedUser()->id);
         $current_round=Workshop_session::getRound($workshop->id);
         if( $userCountScored != $current_round - 1 and $current_round!=1 ){
-            // dd($userCountScored, $current_round, $score);
             return "Not Current Round";
         }
         $score_value=$request->input('score');
@@ -231,7 +229,7 @@ class ParticipantController extends UserController
                 Workshop::close($workshop->id);
                 broadcast(new NextRound($key));
                 broadcast(new FinishRounds($key));
-                return redirect('/workshop/'.$key.'/group');//TODO return 'Grouping Screen';
+                return redirect('/workshop/'.$key.'/group');
             }
             broadcast(new NextRound($key));
             return redirect('/workshop/'.$key.'/scoring')->with('success', 'Next Round Started');
@@ -314,24 +312,34 @@ class ParticipantController extends UserController
         $workshop=Workshop::findWorkshopByKey($key);
         $groups=Group::findAllGroupsByWorkshopId($workshop->id);
         $has_group=GroupEnrollment::findEnrollmentsByParticipantId(auth()->user()->id);
-        if($has_group!=null)
+        if(count($groups->all())==0)
+            return redirect('workshop/'.$key.'/group/wait');
+        if(count($has_group->all())!=0)
             return redirect('workshop/'.$key.'/group/'.$has_group->id);
         $result=array();
         foreach($groups as $group){
-            // dd($group);
             array_push($result,[
                 'id'=>$group->id,
                 'idea'=>Card::getCardById($group->card_id)->content,
                 'max'=>$group->max_participants
             ]);
         }
-        // dd($result);
         return view('participant.groups')->with('groups',$result)->with('key',$key);
+    }
+
+    public function showWaitGroups($key){
+        $workshop=Workshop::findWorkshopByKey($key);
+        $groups=Group::findAllGroupsByWorkshopId($workshop->id);
+        if(count($groups->all())!=0)
+            return redirect('workshop/'.$key.'/group');
+        return view('participant.groupWait')->with('workshop',$workshop);
     }
 
     public function showGroup($key,$id){
         $workshop=Workshop::findWorkshopByKey($key);
         $group=Group::findGroupById($id);
+        if(!GroupEnrollment::isParticipantEnrolled($id,auth()->user()->id))
+            return back();
         return view('participant.group')->with('group',$group)->with('key',$key);
     }
 
