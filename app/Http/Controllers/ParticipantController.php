@@ -227,6 +227,8 @@ class ParticipantController extends UserController
             $nextRound=Workshop_session::resetDone($workshop->id);
             if($nextRound>5){
                 Workshop::close($workshop->id);
+                Session::put('round', 0);
+                Session::save();
                 broadcast(new NextRound($key));
                 broadcast(new FinishRounds($key));
                 return redirect('/workshop/'.$key.'/group');
