@@ -7,11 +7,14 @@
     <div class="workshop-header-left">
         <h2>{{$workshop->title}}</h2> 
         {{$workshop->description}} 
-        <br>
-        {{$workshop->key}}
     </div>
 
-<div class="workshop-header-right" > </div>    
+<div class="workshop-header-right" >
+
+  <label > Key  </label>
+  <input value="{{$workshop->key}}" readonly />
+  
+</div>    
 </div>
 <hr>
 
@@ -36,7 +39,7 @@
               @foreach ($participants as $item)
               <tr  id="{{$item['id']}}">
                 <td>
-                  <img src="{{url('images/'.$item['photo_link'])}}" alt="" style="width: 200px; height: 200px;">
+                  <img src="{{url('images/'.$item['photo_link'])}}" alt="" style="width: 50px; height: 50px;">
                   <!-- <a href="#" class="user-link"> {{$item['Fname']." ".$item["Lname"]}} </a> -->
                 </td>
                 <td>

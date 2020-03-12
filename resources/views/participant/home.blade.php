@@ -99,10 +99,9 @@
                     {{$workshop['created_at']->diffForHumans()}}</div>
                 </div>
                 <div class="col-auto">
-                  <div class="text-sm font-weight-bold mb-2"><i class="fa fa-clock-o"></i> {{$workshop->user['Fname']}}
+                  <div class="text-sm font-weight-bold mb-2"><i class="fa fa-user"></i> {{$workshop->user['Fname']}}
                     {{$workshop->user['Lname']}} </div>
-                  <div class="h5 mb-0 font-weight-bold "><i
-                      class="fa fa-comment-o"></i>{{$workshop['required_participants']}}</div>
+
                 </div>
               </div>
             </div>
