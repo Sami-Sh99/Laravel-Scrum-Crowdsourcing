@@ -8,7 +8,7 @@ var pusher = new Pusher('2e19e7364cd8170d657c', {
 });
 
 var workshopKey = document.getElementById("workshop_key").value;
-
+var notificationCount = 0;
 
 $("#Launch").on('click',function(){
   console.log('launching');
@@ -26,7 +26,9 @@ $("#Launch").on('click',function(){
 });
 var channel = pusher.subscribe('workshop.' + workshopKey);
 channel.bind('new-user', function(data) {
-  console.log(data);
+
+notificationCount++;
+
 var row=document.getElementById("participants-table").insertRow();
 var cell1 = row.insertCell(0);
 var cell2 = row.insertCell(1);
@@ -38,7 +40,15 @@ cell1.innerHTML = '<td><img style="width: 50px; height: 50px;" src="'+data.photo
 cell2.innerHTML = '<td><a href="#">'+data.fullname+'</a></td>';
 cell3.innerHTML = '<td style="width: 20%;">'+data.email+'</td>';
 
+$("#notification_count").html(notificationCount);
+
+$("#no_new_notifications").remove();
+
+$("#notification_div").append("<a class='dropdown-item d-flex align-items-center' ><div><span class='font-weight-bold'>new participant" + data.fullname + " joined!</span></div></a>");
+
+
 });
+
 channel.bind('finish-all-rounds', function(data){
   window.location.replace("/facilitator/workshop/"+workshopKey+"/results");
   });
