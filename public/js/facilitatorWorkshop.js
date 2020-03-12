@@ -39,13 +39,13 @@ cell2.innerHTML = '<td><a href="#">'+data.fullname+'</a></td>';
 cell3.innerHTML = '<td style="width: 20%;">'+data.email+'</td>';
 
 });
+channel.bind('finish-all-rounds', function(data){
+  window.location.replace("/facilitator/workshop/"+workshopKey+"/results");
+  });
 
 channel.bind('submit-card', function(data){
+  console.log('sami');
 var row = document.getElementById(data.id);
 row.classList.remove("danger");
 row.classList.add("success");
 });
-
-channel.bind('finish-all-rounds', function(data){
-  window.location.replace("/facilitator/workshop/"+workshopKey+"/results");
-  });

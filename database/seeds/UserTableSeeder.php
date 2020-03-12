@@ -60,28 +60,28 @@ class UserTableSeeder extends Seeder
                 ]);
             }
         }
-    //     $workshop=Workshop::create([
-    //         'facilitator_id'=>8,
-    //         'key'=>'www',
-    //         'title'=>'The Seeded Workshop',
-    //         'required_participants'=>6,
-    //         'description'=>'This is a test workshop',
-    //         'is_closed'=>false,
-    //         'has_ended'=>false,
-    //     ]);
-    //     for ($i=2; $i < 8; $i++) { 
-    //         $data=[
-    //             'participant_id'=>$i,
-    //             'workshop_id'=>$workshop->id
-    //         ];
-    //         WorkshopEnrollment::addWorkshopEnrollment($data);
-    //     }
-    //     $workshop->is_closed=true;
-    //     Workshop_session::CreateSession($workshop->id);
-    //     $workshop->save();
-    //     for ($i=2; $i < 7; $i++) { 
-    //         Card::createCard('1',$i,"Card #".$i);
-    //     }
+        $workshop=Workshop::create([
+            'facilitator_id'=>8,
+            'key'=>'www',
+            'title'=>'The Seeded Workshop',
+            'required_participants'=>6,
+            'description'=>'This is a test workshop description',
+            'is_closed'=>false,
+            'has_ended'=>false,
+        ]);
+        for ($i=2; $i < 8; $i++) { 
+            $data=[
+                'participant_id'=>$i,
+                'workshop_id'=>$workshop->id
+            ];
+            WorkshopEnrollment::addWorkshopEnrollment($data);
+        }
+        $workshop->is_closed=true;
+        Workshop_session::CreateSession($workshop->id);
+        $workshop->save();
+        for ($i=2; $i < 7; $i++) { 
+            Card::createCard('1',$i,"Card #".$i);
+        }
         
     }
 }

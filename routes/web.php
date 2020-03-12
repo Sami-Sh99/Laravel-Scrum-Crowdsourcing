@@ -106,12 +106,12 @@ Route::get('/workshop/{key}/wait','ParticipantController@showWait');
 
 //Group
 Route::get('workshop/{key}/group','ParticipantController@showGroups');
+Route::get('workshop/{key}/group/wait','ParticipantController@showWaitGroups');
 Route::get('workshop/{key}/group/{id}','ParticipantController@showGroup');
 Route::get('workshop/{key}/group/join/{id}','ParticipantController@joinGroup');
 Route::get('workshop/{key}/group/leave/{id}','ParticipantController@leaveGroup');
 Route::get('/facilitator/workshop/{id}/groupAdmin','FacilitatorController@showGroup');
 Route::get('/facilitator/workshop/{wid}/{gid}/kick/{pid}','FacilitatorController@kickGroup');
-
 
 
 

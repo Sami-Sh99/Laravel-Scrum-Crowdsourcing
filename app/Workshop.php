@@ -23,6 +23,10 @@ class Workshop extends Model
         return $workshop;
     }
 
+    public static function findWorkshopById($id){
+        return self::where('id',$id)->first();
+    }
+
     public static function findWorkshopByKey($key){
         return self::where('key',$key)->first();
     }
@@ -40,7 +44,7 @@ class Workshop extends Model
         return $this->belongsTo('App\User', 'facilitator_id');
     }
 
-    public function close($id){
+    public static function close($id){
         $workshop=self::where('id',$id)->first();
         $workshop->has_ended=1;
         $workshop->save();
