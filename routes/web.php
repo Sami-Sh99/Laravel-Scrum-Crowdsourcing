@@ -120,3 +120,6 @@ Route::get('/facilitator/workshop/{wid}/{gid}/kick/{pid}','FacilitatorController
 // Route::get('/test/{id}','ParticipantController@generateScoringSystem');
 // Route::get('/sami','ParticipantController@sami');
 // Route::get('haha',function(){broadcast(new App\Events\FinishRounds('FVOhILL'));});
+Route::get('haha',function(){
+    return App\Score::fillMissing(1);
+});

@@ -170,7 +170,7 @@ class ParticipantController extends UserController
         if(!WorkshopEnrollment::isParticipantEnrolled($workshop->id,auth()->user()->id))
             return "Error user not enrolled in this workshop";
         Card::createCard($workshop->id,auth()->user()->id, $request->input('content'));
-        broadcast(new SubmitCard($this->getAuthedUser()->id,$key));//TODO check what functionality this broadcast used for
+        broadcast(new SubmitCard($this->getAuthedUser()->id,$key));
         Session::put('round', 0);
         Session::save();
         if(Card::countCards($workshop->id) == $workshopEnrollsCount){
@@ -309,7 +309,9 @@ class ParticipantController extends UserController
                 ]);
             }
         }
+
         Score::insert($Scores);
+        while(Score::fillMissing($workshop_id)==1);
         $session=Workshop_session::ShuffleReady($workshop_id);
         return $Scores;
     }
