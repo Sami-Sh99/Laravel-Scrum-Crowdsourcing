@@ -20,6 +20,7 @@ class AddAdminRecord extends Migration
                 'email' => 'admin@admin.com',
                 'Fname'=>'Admin',
                 'Lname'=>'Admin',
+                'is_verified'=>1,
                 'password' => Hash::make('admin123'),
                 'role'=>'A',
             )
