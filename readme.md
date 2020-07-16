@@ -10,16 +10,6 @@ This project proposes a digital solution to enable distributed teams to benefit 
 
 ## Screenshots
 
-![alt text](https://drive.google.com/file/d/1sjO8oq6xyBITF5OMc0kNDv7qOvEswMQP/view?usp=sharing)
-
-![alt text](https://drive.google.com/file/d/1g0XIFXDUXOsht1NUe2omxUMUkEkBrKu8/view?usp=sharing)
-
-![alt text](https://drive.google.com/file/d/1vqYsQ9DSBdZb2lYGOvXYtkk22JDE1F_J/view?usp=sharing)
-
-![alt text](https://drive.google.com/file/d/1grAcQdAybjW8AZbjRSJdmiQu6xWeY14e/view?usp=sharing)
-
-![alt text](https://drive.google.com/file/d/1vtn4enQzUoSxx430Q4vf809z9GaR_Bqs/view?usp=sharing)
-
 
 
 ## Demo
