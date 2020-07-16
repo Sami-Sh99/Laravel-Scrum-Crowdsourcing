@@ -10,6 +10,16 @@ This project proposes a digital solution to enable distributed teams to benefit 
 
 ## Screenshots
 
+![Alt text](/demo/t.jpg?raw=true "HomeScreen")
+
+![Alt text](/demo/login.jpg?raw=true "LoginScreen")
+
+![Alt text](/demo/workshop-dashboard.jpg?raw=true "HomeScreen")
+
+![Alt text](/demo/rate-card.jpg?raw=true "HomeScreen")
+
+![Alt text](/demo/submit-card.jpg?raw=true "HomeScreen")
+
 
 
 ## Demo
