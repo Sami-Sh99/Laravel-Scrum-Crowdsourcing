@@ -8,6 +8,29 @@ This project proposes a digital solution to enable distributed teams to benefit 
 
 - [Read this article](https://medium.com/the-liberators/use-25-10-crowd-sourcing-to-spice-up-your-scrum-events-56fdd127e1dc) for more info about Crowd Sourcing.
 
+## Screenshots
+
+![alt text](https://drive.google.com/file/d/1sjO8oq6xyBITF5OMc0kNDv7qOvEswMQP/view?usp=sharing)
+
+![alt text](https://drive.google.com/file/d/1g0XIFXDUXOsht1NUe2omxUMUkEkBrKu8/view?usp=sharing)
+
+![alt text](https://drive.google.com/file/d/1vqYsQ9DSBdZb2lYGOvXYtkk22JDE1F_J/view?usp=sharing)
+
+![alt text](https://drive.google.com/file/d/1grAcQdAybjW8AZbjRSJdmiQu6xWeY14e/view?usp=sharing)
+
+![alt text](https://drive.google.com/file/d/1vtn4enQzUoSxx430Q4vf809z9GaR_Bqs/view?usp=sharing)
+
+
+
+## Demo
+
+The following video showcases the 25/10 Crowd-Sourcing process using our web app:
+
+https://drive.google.com/file/d/16Gf4Np50tqdDe8dBnktDQfUER887aERu/view?usp=sharing
+
+
+
+
 ## Usage
 
 
